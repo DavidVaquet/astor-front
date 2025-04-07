@@ -1,4 +1,4 @@
-const API_URL = `http://localhost:5002/api/transacciones`;
+const API_URL = `${import.meta.env.VITE_API_URL}/transacciones`;
 
 
 export const nuevoComprobante = async(tipo, monto, tipoComprobante, nroComprobante, imagenComprobante, local, descripcion, metodoPago, usuario) => {
