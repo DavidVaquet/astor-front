@@ -25,7 +25,7 @@ export const Home = () => {
   return (
     <div>
       <div className='flex items-center mb-5'>
-          <h1 className='text-3xl text-white text-center uppercase'>Estadisticas Generales Astor</h1>
+          <h1 className='text-3xl text-primary text-center uppercase'>Estadisticas Generales Astor</h1>
         </div>
       <div className='grid grid-cols-1 md:grid-cols-2 items-center lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-10'>
       {/* Card */}
