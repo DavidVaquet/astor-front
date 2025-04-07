@@ -38,7 +38,7 @@ export const GestionUsuarios = () => {
 
   return (
     <div className="p-4 mt-2 text-gray-800">
-      <h2 className="text-2xl font-bold mb-4 text-center text-gray-900 dark:text-white">Usuarios del Sistema</h2>
+      <h2 className="text-2xl font-bold mb-4 text-center text-primary uppercase">Usuarios del Sistema</h2>
 
       {error && <p className="text-red-500 mb-4 font-semibold text-center">{error}</p>}
 
