@@ -83,7 +83,7 @@ export const manejarRegistro = async ({
   };
 
 
-  export const manejarRestablecerPassword = async ({token, nuevoPassword, toast, setError}) => {
+  export const manejarRestablecerPassword = async ({token, nuevoPassword, toast, setError, navigate}) => {
 
     try {
       const data = await confirmarPassword(nuevoPassword, token);
