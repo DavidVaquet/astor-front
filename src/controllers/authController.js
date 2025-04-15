@@ -1,5 +1,5 @@
 import { replace } from 'react-router-dom';
-import {login, register} from '../services/authServices';
+import {confirmarPassword, emailRecuperacion, login, register} from '../services/authServices';
 export const manejarLogin = async ({ email, password, setError, setUser, navigate }) => {
   
   try {
@@ -64,5 +64,38 @@ export const manejarRegistro = async ({
       if (setSuccess) setSuccess("");
       if (setError) setError(error.message);
       console.error("Error al registrar:", error.message);
+    }
+  };
+
+
+  export const enviarEmailRecuperacion = async ({email, toast, setError}) => {
+
+    try {
+      const data = await emailRecuperacion(email);
+      toast.success(data.msg || "Correo de recuperación enviado con éxito")
+      setError('');
+
+    } catch (error) {
+      
+      setError(error.message);
+      toast.error("Error: " + error.message);
+    }
+  };
+
+
+  export const manejarRestablecerPassword = async ({token, nuevoPassword, toast, setError}) => {
+
+    try {
+      const data = await confirmarPassword(token, nuevoPassword);
+      toast.success(data.msg || 'Contraseña actualizada correctamente');
+      setError('');
+      
+      setTimeout(() => {
+        navigate('/login');
+      }, 2000);
+
+    } catch (error) {
+      setError(error.message);
+      toast.error("Error: " + error.message);
     }
   };

@@ -79,6 +79,10 @@ export const eliminarComprobantes = async (id) => {
             'Content-Type': 'application/json'
           }
       });
+
+      if(respuesta.status === 403) {
+        throw new Error("No tienes permisos para eliminar comprobantes.");
+      }
   
       if (!respuesta.ok) {
         throw new Error('Error al eliminar el comprobante - Service');

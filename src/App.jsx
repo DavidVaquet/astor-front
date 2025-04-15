@@ -6,6 +6,7 @@ import { LayoutAdmin } from './layout/LayoutAdmin';
 // Pages Auth
 import { Login } from '/src/pages/auth/Login.jsx';
 import { RecoveryPassword } from './pages/auth/RecoveryPassword';
+import { RestablecerPassword } from './pages/auth/RestablecerPassword';
 // Pages admin
 import { Home } from './pages/admin/Home';
 import { AstorFray } from './pages/admin/AstorFray';
@@ -21,6 +22,11 @@ import { GestionUsuarios } from './pages/admin/GestionUsuarios';
 import { ComprobantesFray} from './pages/admin/ComprobantesAstorFray';
 import { ComprobantesGalindez } from './pages/admin/ComprobantesGalindez';
 import { ComprobantesInmobiliaria } from './pages/admin/ComprobantesInmobiliaria';
+// Historiales Financieros 
+import { HistorialFinancieroFray } from './pages/admin/HistorialFinancieroFray';
+import { HistorialFinancieroGalindez } from './pages/admin/HistorialFinancieroGalindez';
+import { HistorialFinancieroInmobiliaria } from './pages/admin/HistorialFinancieroInmobiliaria';
+import { HistorialGeneral} from './pages/admin/HistorialGeneral';
 // React Toast
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -38,16 +44,17 @@ function App() {
       {/* Ruta publica */}
       <Route path='/login' element={<Login/>} />
       <Route path='/recuperar-contraseña' element={<RecoveryPassword/>} />
-      
+      <Route path="/restablecer-password/:token" element={<RestablecerPassword />} />
 
     <Route path='/home' element={<LayoutAdmin/>}>
       <Route index element={<Home/>} />
-
+      <Route path='Historial-General' element={<HistorialGeneral/>} />
       {/* Rutas protegidas Astor Fray  */}
       <Route element={<RutaProtegida rolesPermitidos={['ENCARGADOFRAY_ROLE', 'ADMIN_ROLE']}/>} >
       <Route path='AstorFray' element={<HomeFray/>} />
       <Route path='Comprobantes-Fray' element={<AstorFray/>} />
       <Route path='Listado-Fray' element={<ComprobantesFray/>} />
+      <Route path='Historial-Fray' element={<HistorialFinancieroFray/>} />
       </Route>
 
       {/* Rutas protegidas Astor Galindez */}
@@ -55,6 +62,7 @@ function App() {
       <Route path='AstorGalindez' element={<HomeGalindez/>} />
       <Route path='Comprobantes-Galindez' element={<AstorGalindez/>} />
       <Route path='Listado-Galindez' element={<ComprobantesGalindez/>} />
+      <Route path='Historial-Galindez' element={<HistorialFinancieroGalindez/>} />
       </Route>
 
       {/* Rutas protegidas Inmobiliaria Catamarca Inversiones */}
@@ -62,6 +70,7 @@ function App() {
       <Route path='Inmobiliaria' element={<HomeInmobiliaria/>} />
       <Route path='Comprobantes-Inmobiliaria' element={<Inmobiliaria/>} />
       <Route path='Listado-Inmobiliaria' element={<ComprobantesInmobiliaria/>} />
+      <Route path='Historial-Inmobiliaria' element={<HistorialFinancieroInmobiliaria/>} />
       </Route>
       
       {/* Rutas protegidas creacion de usuario */}

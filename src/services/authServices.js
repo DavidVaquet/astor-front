@@ -60,3 +60,49 @@ export const logout = () => {
     window.location.href = '/login';
 };
 
+
+export const emailRecuperacion = async (email) => {
+
+  try {
+    const respuesta = await fetch(`${API_URL}/solicitar-reset-password`, {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({email})
+    });
+
+    if (!respuesta.ok) {
+      const data = await respuesta.json();
+      throw new Error(data.msg || 'Error al enviar el email')
+    };
+
+    const data = await respuesta.json();
+    return data;
+
+  } catch (error) {
+    throw new Error(error.message || 'Error al enviar el email');
+  }
+};
+
+
+export const confirmarPassword = async (nuevoPassword, token) => {
+
+  try {
+    const respuesta = await fetch(`${API_URL}/restablecer-password/${token}`, {
+      method: 'PUT',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify(nuevoPassword)
+    });
+
+    if (!respuesta.ok) {
+      const data = await respuesta.json();
+      throw new Error(data.msg || 'Error al restablecer la contrasena'); 
+    }
+
+    const data = await respuesta.json();
+    return data;
+
+  } catch (error) {
+    throw new Error(error.message);
+  }
+
+}

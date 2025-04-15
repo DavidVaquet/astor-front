@@ -12,8 +12,8 @@ import { ComprobanteContext } from "../../context/ComprobanteContext";
 import Swal from "sweetalert2";
 
 export const ComprobantesGalindez = () => {
-  const { recargarComprobantes, toggleRecargar } =
-    useContext(ComprobanteContext);
+
+  const {recargarComprobantes, toggleRecargar} = useContext(ComprobanteContext);
 
   const [comprobantes, setComprobantes] = useState([]);
   const [error, setError] = useState("");

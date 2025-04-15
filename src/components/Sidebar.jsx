@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { FaReceipt, FaUser } from "react-icons/fa";
 import { SiGoogleanalytics } from "react-icons/si";
-import { MdOutlineClose } from "react-icons/md";
+import { MdOutlineClose, MdAutoAwesomeMotion } from "react-icons/md";
 import { IoLogOut } from "react-icons/io5";
 import { Link } from 'react-router-dom';
 import { IoMenu } from "react-icons/io5";
@@ -28,6 +28,9 @@ export const Sidebar = () => {
           </Link>
           <Link to='/home/inmobiliaria' className='flex items-center font-medium gap-4 py-3 px-4 rounded-lg hover:bg-secondary-900 transition-colors'>
           <FaReceipt className='text-yellow-400'/>Facturación Inmobiliaria
+          </Link>
+          <Link to='/home/Historial-General' className='flex items-center font-medium gap-4 py-3 px-4 rounded-lg hover:bg-secondary-900 transition-colors'>
+          <MdAutoAwesomeMotion className='text-yellow-400'/>Historial Financiero General
           </Link>
           <Link to='/home/crear-usuario' className='flex items-center font-medium gap-4 py-3 px-4 rounded-lg hover:bg-secondary-900 transition-colors'>
           <FaUser className='text-yellow-400'/>Crear Usuario

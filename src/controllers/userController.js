@@ -30,7 +30,7 @@ export const manejarActualizarUsuario = async({id, datosActualizados, toast, set
       return data;
 
    } catch (error) {
-      if (setError) setError(error.message);
+      
       if (toast) toast.error(error.message);
       console.error("Error al editar usuario:", error.message);
    }
