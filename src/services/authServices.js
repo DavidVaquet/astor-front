@@ -90,7 +90,7 @@ export const confirmarPassword = async (nuevoPassword, token) => {
     const respuesta = await fetch(`${API_URL}/restablecer-password/${token}`, {
       method: 'PUT',
       headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify(nuevoPassword)
+      body: JSON.stringify({ nuevaPassword: nuevoPassword })
     });
 
     if (!respuesta.ok) {
