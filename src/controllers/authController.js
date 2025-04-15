@@ -86,7 +86,7 @@ export const manejarRegistro = async ({
   export const manejarRestablecerPassword = async ({token, nuevoPassword, toast, setError}) => {
 
     try {
-      const data = await confirmarPassword(token, nuevoPassword);
+      const data = await confirmarPassword(nuevoPassword, token);
       toast.success(data.msg || 'Contraseña actualizada correctamente');
       setError('');
       
