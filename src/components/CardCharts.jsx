@@ -14,8 +14,8 @@ import {
     height: 240,
     series: [
       {
-        name: "Sales",
-        data: [50, 40, 300, 320, 500, 350, 200, 230, 500],
+        name: "Ingresos",
+        data: [0, 0, 0, 0, 0, 0, 0, 0, 0],
       },
     ],
     options: {

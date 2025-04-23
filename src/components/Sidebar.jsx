@@ -18,36 +18,36 @@ export const Sidebar = () => {
         <img src={logo} alt="ASTOR-LOGO" className='w-40 h-40 mx-auto' />
         <nav className='mt-2'>
           <Link to='/home' className='flex items-center font-medium gap-4 py-3 px-4 rounded-lg hover:bg-secondary-900 transition-colors'>
-          <SiGoogleanalytics className='text-yellow-400'/>Estadisticas Generales
+          <SiGoogleanalytics className='text-primary'/>Estadisticas Generales
           </Link>
           <Link to='/home/astorfray' className='flex items-center font-medium gap-4 py-3 px-4 rounded-lg hover:bg-secondary-900 transition-colors'>
-          <FaReceipt className='text-yellow-400'/>Facturación Fray
+          <FaReceipt className='text-primary'/>Facturación Fray
           </Link>
           <Link to='/home/astorgalindez' className='flex items-center gap-4  font-medium py-3 px-4 rounded-lg hover:bg-secondary-900 transition-colors'>
-          <FaReceipt className='text-yellow-400'/>Facturación Galindez
+          <FaReceipt className='text-primary'/>Facturación Galindez
           </Link>
           <Link to='/home/inmobiliaria' className='flex items-center font-medium gap-4 py-3 px-4 rounded-lg hover:bg-secondary-900 transition-colors'>
-          <FaReceipt className='text-yellow-400'/>Facturación Inmobiliaria
+          <FaReceipt className='text-primary'/>Facturación Inmobiliaria
           </Link>
           <Link to='/home/Historial-General' className='flex items-center font-medium gap-4 py-3 px-4 rounded-lg hover:bg-secondary-900 transition-colors'>
-          <MdAutoAwesomeMotion className='text-yellow-400'/>Historial Financiero General
+          <MdAutoAwesomeMotion className='text-primary'/>Historial Financiero General
           </Link>
           <Link to='/home/crear-usuario' className='flex items-center font-medium gap-4 py-3 px-4 rounded-lg hover:bg-secondary-900 transition-colors'>
-          <FaUser className='text-yellow-400'/>Crear Usuario
+          <FaUser className='text-primary'/>Crear Usuario
           </Link>
           <Link to='/home/usuarios' className='flex items-center font-medium gap-4 py-3 px-4 rounded-lg hover:bg-secondary-900 transition-colors'>
-          <FaUser className='text-yellow-400'/>Gestion de Usuarios
+          <FaUser className='text-primary'/>Gestion de Usuarios
           </Link>
           
         </nav>
       </div>
       <nav>
       <button onClick={logout} className='flex items-center  font-medium gap-4 py-3 mb-2 px-4 rounded-lg hover:bg-secondary-900 transition-colors'>
-          <IoLogOut className='text-yellow-400'/>Cerrar sesion
+          <IoLogOut className='text-primary'/>Cerrar sesion
           </button>
       </nav>
     </div>
-    <button onClick={() => setShowMenu(!showMenu)} className='xl:hidden rounded-full bg-yellow-400 fixed bottom-4 right-4 text-black p-3 z-50'> 
+    <button onClick={() => setShowMenu(!showMenu)} className='xl:hidden rounded-full bg-primary fixed bottom-4 right-4 text-black p-3 z-50'> 
       {showMenu ? <MdOutlineClose/> : <IoMenu/>}
      </button>
     </>

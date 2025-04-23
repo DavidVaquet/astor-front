@@ -1,8 +1,12 @@
 import { useEffect, useState } from "react";
-import { manejarEditarHistorialMensual, manejarObtenerHistorialPorLocal } from "../controllers/historialController";
+import {
+  manejarEditarHistorialMensual,
+  manejarObtenerHistorialPorLocal,
+} from "../controllers/historialController";
 import { toast } from "react-toastify";
-export const HistorialFinanciero = ({ local }) => {
+import { FaEdit, FaSave } from "react-icons/fa";
 
+export const HistorialFinanciero = ({ local }) => {
   const [historial, setHistorial] = useState([]);
   const [error, setError] = useState("");
   const [editandoId, setEditandoId] = useState(null);
@@ -14,8 +18,8 @@ export const HistorialFinanciero = ({ local }) => {
     setValoresEditados({
       totalIngreso: item.totalIngreso,
       totalEgreso: item.totalEgreso,
-      balance: item.balance
-    })
+      balance: item.balance,
+    });
   };
 
   const guardarCambios = async () => {
@@ -24,11 +28,10 @@ export const HistorialFinanciero = ({ local }) => {
       nuevosValores: valoresEditados,
       toast,
       setError,
-    })
+    });
     setEditandoId(null);
-    setRecargar(prev => !prev);
+    setRecargar((prev) => !prev);
   };
-
 
   useEffect(() => {
     if (local) {
@@ -37,75 +40,103 @@ export const HistorialFinanciero = ({ local }) => {
   }, [local, recargar]);
 
   return (
-    <div className="mt-10">
-      <h2 className="text-2xl font-bold text-center text-primary mb-6">
+    <div className="p-6 mt-[70px] bg-gray-200 rounded-lg shadow-xl">
+      <h2 className="md:text-2xl text-xl font-bold text-center text-primary uppercase mb-6">
         Historial Financiero - {local.toUpperCase()}
       </h2>
 
-      {error && <p className="text-red-500 text-center mb-4">{error}</p>}
+      {error && (
+        <p className="text-red-500 text-center font-semibold mb-4">
+          ❌ {error}
+        </p>
+      )}
 
-      <div className="overflow-x-auto rounded-lg shadow-md bg-white dark:bg-gray-800">
-        <table className="min-w-full text-sm md:text-base text-left text-gray-700 dark:text-gray-200">
-          <thead className="bg-gray-100 dark:bg-gray-700">
+      {/* Vista Desktop */}
+      <div className="hidden md:block overflow-x-auto bg-white dark:bg-gray-900 shadow-xl rounded-xl">
+        <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700 text-black dark:text-white">
+          <thead className="bg-gray-100 dark:bg-gray-800">
             <tr>
-              <th className="px-4 py-3">Fecha</th>
-              <th className="px-4 py-3">Ingresos</th>
-              <th className="px-4 py-3">Egresos</th>
-              <th className="px-4 py-3">Balance</th>
-              <th className="px-4 py-3">Accion</th>
+              <th className="px-6 py-3 text-left text-sm font-bold uppercase">📅 Fecha</th>
+              <th className="px-6 py-3 text-left text-sm font-bold uppercase">🟢 Ingresos</th>
+              <th className="px-6 py-3 text-left text-sm font-bold uppercase">🔴 Egresos</th>
+              <th className="px-6 py-3 text-left text-sm font-bold uppercase">💰 Balance</th>
+              <th className="px-6 py-3 text-left text-sm font-bold uppercase">✏️ Acción</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
             {historial.map((item) => (
               <tr
                 key={`${item.anio}-${item.mes}`}
-                className="border-t border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
+                className="hover:bg-gray-50 dark:hover:bg-gray-800 transition"
               >
-                <td className="px-4 py-3">
-                  {item.mes}/{item.anio}
-                </td>
-                <td className="px-4 py-3 text-green-600 font-semibold">
+                <td className="px-6 py-4">{item.mes}/{item.anio}</td>
+
+                <td className="px-6 py-4 font-semibold text-green-600">
                   {editandoId === item._id ? (
                     <input
-                    type="number"
-                    value={valoresEditados.totalIngreso}
-                    onChange={(e) => setValoresEditados({...valoresEditados, totalIngreso: e.target.value})}/>
-                  ) : `${item.totalIngreso.toLocaleString()}`}
+                      type="number"
+                      className="px-2 py-1 rounded-md border border-yellow-400 text-black w-full"
+                      value={valoresEditados.totalIngreso}
+                      onChange={(e) =>
+                        setValoresEditados({
+                          ...valoresEditados,
+                          totalIngreso: e.target.value,
+                        })
+                      }
+                    />
+                  ) : `$${item.totalIngreso.toLocaleString()}`}
                 </td>
-                <td className="px-4 py-3 text-red-600 font-semibold">
+
+                <td className="px-6 py-4 font-semibold text-red-600">
                   {editandoId === item._id ? (
-                  <input
-                  type="number"
-                  value={valoresEditados.totalEgreso}
-                  onChange={(e) => setValoresEditados({...valoresEditados, totalEgreso: e.target.value})}/>
-                  ) : `${item.totalEgreso.toLocaleString()}`}
+                    <input
+                      type="number"
+                      className="px-2 py-1 rounded-md border border-yellow-400 text-black w-full"
+                      value={valoresEditados.totalEgreso}
+                      onChange={(e) =>
+                        setValoresEditados({
+                          ...valoresEditados,
+                          totalEgreso: e.target.value,
+                        })
+                      }
+                    />
+                  ) : `$${item.totalEgreso.toLocaleString()}`}
                 </td>
+
                 <td
-                  className={`px-4 py-3 font-bold ${
+                  className={`px-6 py-4 font-bold ${
                     item.balance >= 0 ? "text-green-700" : "text-red-700"
                   }`}
                 >
                   {editandoId === item._id ? (
                     <input
-                    type="number"
-                    value={valoresEditados.balance}
-                    onChange={(e) => setValoresEditados({...valoresEditados, balance: e.target.value})}
+                      type="number"
+                      className="px-2 py-1 rounded-md border border-yellow-400 text-black w-full"
+                      value={valoresEditados.balance}
+                      onChange={(e) =>
+                        setValoresEditados({
+                          ...valoresEditados,
+                          balance: e.target.value,
+                        })
+                      }
                     />
-                  ) : `${item.balance.toLocaleString()}`}
+                  ) : `$${item.balance.toLocaleString()}`}
                 </td>
-                <td
-                className="px-4 py-3">
+
+                <td className="px-6 py-4">
                   {editandoId === item._id ? (
                     <button
-                    onClick={guardarCambios}
-                    className="bg-green-600 hover:bg-green-700 text-white font-semibold px-4 py-1 rounded shadow-md transition-colors duration-200">
-                      Guardar
+                      onClick={guardarCambios}
+                      className="flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white font-semibold px-3 py-1 rounded-md transition"
+                    >
+                      <FaSave /> Guardar
                     </button>
                   ) : (
                     <button
-                    onClick={() => comenzarEdicion(item)}
-                    className="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-4 py-1 rounded shadow-md transition-colors duration-200">
-                      Editar
+                      onClick={() => comenzarEdicion(item)}
+                      className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold px-3 py-1 rounded-md transition"
+                    >
+                      <FaEdit /> Editar
                     </button>
                   )}
                 </td>
@@ -113,6 +144,84 @@ export const HistorialFinanciero = ({ local }) => {
             ))}
           </tbody>
         </table>
+      </div>
+
+      {/* Vista Mobile */}
+      <div className="md:hidden flex flex-col gap-6 mt-6">
+        {historial.map((item) => (
+          <div key={`${item.anio}-${item.mes}`} className="bg-white dark:bg-gray-900 shadow-lg rounded-lg p-4 text-black dark:text-white">
+            📅 <span className="font-bold">{item.mes}/{item.anio}</span>
+
+            <p className="mb-2">
+              <strong>🟢 Ingresos:</strong>{" "}
+              {editandoId === item._id ? (
+                <input
+                  type="number"
+                  value={valoresEditados.totalIngreso}
+                  className="mt-1 w-full px-2 py-1 rounded-md border border-yellow-400 text-black"
+                  onChange={(e) =>
+                    setValoresEditados({
+                      ...valoresEditados,
+                      totalIngreso: e.target.value,
+                    })
+                  }
+                />
+              ) : `$${item.totalIngreso.toLocaleString()}`}
+            </p>
+
+            <p className="mb-2">
+              <strong>🔴 Egresos:</strong>{" "}
+              {editandoId === item._id ? (
+                <input
+                  type="number"
+                  value={valoresEditados.totalEgreso}
+                  className="mt-1 w-full px-2 py-1 rounded-md border border-yellow-400 text-black"
+                  onChange={(e) =>
+                    setValoresEditados({
+                      ...valoresEditados,
+                      totalEgreso: e.target.value,
+                    })
+                  }
+                />
+              ) : `$${item.totalEgreso.toLocaleString()}`}
+            </p>
+
+            <p className="mb-2 font-semibold">
+              <strong>💰 Balance:</strong>{" "}
+              {editandoId === item._id ? (
+                <input
+                  type="number"
+                  value={valoresEditados.balance}
+                  className="mt-1 w-full px-2 py-1 rounded-md border border-yellow-400 text-black"
+                  onChange={(e) =>
+                    setValoresEditados({
+                      ...valoresEditados,
+                      balance: e.target.value,
+                    })
+                  }
+                />
+              ) : `$${item.balance.toLocaleString()}`}
+            </p>
+
+            <div className="mt-4 text-right">
+              {editandoId === item._id ? (
+                <button
+                  onClick={guardarCambios}
+                  className="flex items-center justify-center gap-2 bg-green-600 hover:bg-green-700 text-white font-bold px-3 py-1 rounded-md transition w-full"
+                >
+                  <FaSave /> Guardar
+                </button>
+              ) : (
+                <button
+                  onClick={() => comenzarEdicion(item)}
+                  className="flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-bold px-3 py-1 rounded-md transition w-full"
+                >
+                  <FaEdit /> Editar
+                </button>
+              )}
+            </div>
+          </div>
+        ))}
       </div>
     </div>
   );

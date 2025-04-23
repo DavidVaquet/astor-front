@@ -22,8 +22,7 @@ export const nuevoComprobante = async(tipo, monto, tipoComprobante, nroComproban
             console.error("❌ No hay token en localStorage");
             throw new Error("No se encontró el token. Por favor, inicia sesión nuevamente.");
           }
-          console.log("🔍 tipoComprobante enviado:", tipoComprobante);
-          console.log("🟦 Body enviado:", body);
+          
         const respuesta = await fetch(`${API_URL}/crearTransaccion`, {
             method: 'POST',
             headers: {'Content-Type': 'application/json', 'Authorization': `${token}`},

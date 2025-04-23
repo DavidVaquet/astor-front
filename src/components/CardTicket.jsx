@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom';
 
 const CardTicket = (props) => {
 
-const {ticket, totalTickets, text} = props;
+const {ticket, totalTickets, text, link} = props;
 
 let status = '';
 let textColor = '';
@@ -39,7 +39,7 @@ switch(ticket) {
         <div>
           <FaBalanceScale className={`text-4xl ${status}  p-2 box-content rounded-xl`}/>
         </div>
-        <div>
+        {/* <div>
           <Menu
           menuButton={
             <MenuButton className='flex items-center gap-x-2 hover:bg-secondary-100 p-2 rounded-lg transition'>
@@ -76,7 +76,7 @@ switch(ticket) {
              </Link>
             </MenuItem>
             </Menu>
-        </div>
+        </div> */}
           
       </div>
       <div className='py-2'>
@@ -86,7 +86,7 @@ switch(ticket) {
         </div>
         <div>
             <hr className='border border-separate border-gray-200/50 my-4' />
-            <Link to='' className='flex items-center gap-2 text-blue-500 font-medium'><RiAddLine/>Agregar nuevo comprobante</Link>
+            <Link to={link} className='flex items-center gap-2 text-blue-500 font-medium'><RiAddLine/>Agregar nuevo comprobante</Link>
         </div>
       </div>
       </div>

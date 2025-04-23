@@ -12,8 +12,7 @@ import { ComprobanteContext } from "../../context/ComprobanteContext";
 import Swal from "sweetalert2";
 
 export const ComprobantesGalindez = () => {
-
-  const {recargarComprobantes, toggleRecargar} = useContext(ComprobanteContext);
+  const { recargarComprobantes, toggleRecargar } = useContext(ComprobanteContext);
 
   const [comprobantes, setComprobantes] = useState([]);
   const [error, setError] = useState("");
@@ -22,7 +21,7 @@ export const ComprobantesGalindez = () => {
   const [imagenSeleccionada, setImagenSeleccionada] = useState(null);
   const [editandoId, setEditandoId] = useState(null);
   const [valoresEditados, setValoresEditados] = useState({});
-  const [busqueda, setBusqueda] = useState('');
+  const [busqueda, setBusqueda] = useState("");
 
   const abrirImagen = (url) => setImagenSeleccionada(url);
   const cerrarImagen = () => setImagenSeleccionada(null);
@@ -33,19 +32,17 @@ export const ComprobantesGalindez = () => {
     manejarObtenerComprobantesPorLocal({ local, setComprobantes, setError });
   }, [local, recargarComprobantes]);
 
-  // Filtros de busqueda
-  
   const comprobantesFiltrados = comprobantes.filter((comp) => {
     const coincideFecha = fechaFiltro
       ? new Date(comp.fecha).toISOString().slice(0, 10) === fechaFiltro
       : true;
-  
+
     const coincideBusqueda = busqueda
       ? comp.descripcion?.toLowerCase().includes(busqueda.toLowerCase()) ||
         comp.usuario?.nombre?.toLowerCase().includes(busqueda.toLowerCase()) ||
         comp.tipo?.toLowerCase().includes(busqueda.toLowerCase())
       : true;
-  
+
     return coincideFecha && coincideBusqueda;
   });
 
@@ -72,170 +69,141 @@ export const ComprobantesGalindez = () => {
     });
   };
 
-  // Funcion para comenzar a editar  
-     const comenzarEdicion = (id, comprobante) => {
-      setEditandoId(id);
-      setValoresEditados({
-        descripcion: comprobante.descripcion,
-        monto: comprobante.monto,
-        nroComprobante: comprobante.nroComprobante
-      })
-     };
-     
-    //  Funcion para guardar los cambios
-    const guardarCambios = (id) => {
-      manejarActualizarComprobante({
-        id,
-        nuevosValores: valoresEditados,
-        setError,
-        setSuccess,
-        toast,
-        toggleRecargar
-      })
-      setEditandoId(null);
-    };
+  const comenzarEdicion = (id, comprobante) => {
+    setEditandoId(id);
+    setValoresEditados({
+      descripcion: comprobante.descripcion,
+      monto: comprobante.monto,
+      nroComprobante: comprobante.nroComprobante,
+    });
+  };
+
+  const guardarCambios = (id) => {
+    manejarActualizarComprobante({
+      id,
+      nuevosValores: valoresEditados,
+      setError,
+      setSuccess,
+      toast,
+      toggleRecargar,
+    });
+    setEditandoId(null);
+  };
 
   return (
-    <div className="overflow-x-auto rounded-lg">
-      
-      <div className="flex">
+    <div className="overflow-x-auto rounded-lg p-6 bg-gray-200 shadow-xl mt-[70px]">
+      {/* Filtros */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+        <div className="flex flex-col">
+          <label className="text-black font-semibold text-sm mb-1">📅 Filtrar por fecha:</label>
+          <input
+            type="date"
+            className="border border-gray-300 px-3 py-2 rounded-md text-black shadow-sm"
+            value={fechaFiltro}
+            onChange={(e) => setFechaFiltro(e.target.value)}
+          />
+        </div>
 
-      <div className="mb-4">
-        <label className="mr-2 font-semibold text-md text-white pr-2">Filtrar por fecha:</label>
-        <input
-          type="date"
-          className="border border-gray-300 px-2 py-1 rounded-md text-black shadow-sm"
-          value={fechaFiltro}
-          onChange={(e) => setFechaFiltro(e.target.value)}
-        />
+        <div className="flex flex-col">
+          <label className="text-black font-semibold text-sm mb-1">🔍 Buscar por descripción:</label>
+          <input
+            type="text"
+            placeholder="Ej: alquiler, nombre, egreso..."
+            className="border border-gray-300 px-3 py-2 rounded-md text-black shadow-sm"
+            value={busqueda}
+            onChange={(e) => setBusqueda(e.target.value)}
+          />
+        </div>
       </div>
-      <div className="mb-4 ml-6">
-        <label className="mr-2 font-semibold text-md text-white pr-2">Filtrar por descripción:</label>
-        <input
-        type="text"
-        className="border border-gray-300 px-2 py-1 rounded-md text-black shadow-sm"
-        value={busqueda}
-        onChange={(e) => setBusqueda(e.target.value)}
-        />
-      </div>
-      </div>
-      
 
-      {error && <p className="text-red-500 font-medium mb-4">Error: {error}</p>}
+      {error && <p className="text-red-500 font-medium mb-4">❌ Error: {error}</p>}
 
-      {/* TABLA MODERNA */}
-      <table className="min-w-full hidden md:table bg-white text-black dark:bg-gray-800 shadow-md rounded-xl overflow-hidden">
-        <thead className="bg-gray-100 dark:bg-gray-700">
-          <tr className="text-left text-gray-700 dark:text-gray-300">
-            <th className="py-3 px-5">N° Comprobante</th>
-            <th className="py-3 px-5">Método de pago</th>
-            <th className="py-3 px-5">Tipo de comprobante</th>
-            <th className="py-3 px-5">Tipo</th>
-            <th className="py-3 px-5">Descripción</th>
-            <th className="py-3 px-5">Monto</th>
-            <th className="py-3 px-5">Usuario</th>
-            <th className="py-3 px-5">Acción</th>
-          </tr>
-        </thead>
-        <tbody>
-          {comprobantesFiltrados.map((comprobante) => (
-            <tr key={comprobante._id} className="border-t dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700">
-              <td className="py-3 px-5 capitalize">
-                {editandoId === comprobante._id ? (
-                  <input value={valoresEditados.nroComprobante} className="w-full px-2 py-1 text-sm text-black border-2 border-yellow-600 rounded-md" onChange={(e) => setValoresEditados({ ...valoresEditados, nroComprobante: e.target.value})}/>
-                ) : comprobante.nroComprobante}
-              </td>
-              <td className="py-3 px-5 capitalize">{comprobante.metodoPago}</td>
-              <td className="py-3 px-5 capitalize">{comprobante.tipoComprobante}</td>
-              <td className="py-3 px-5 capitalize">{comprobante.tipo}</td>
-              <td className="py-3 px-5 capitalize">
-                {editandoId === comprobante._id ? (
-                  <input value={valoresEditados.descripcion} className="w-full px-2 py-1 text-sm text-black border-2 border-yellow-600 rounded-md" onChange={(e) => setValoresEditados({...valoresEditados, descripcion: e.target.value})}/>
-                ) : comprobante.descripcion}
-              </td>
-              <td className="py-3 px-5">
-                {editandoId === comprobante._id ? (
-                  <input value={valoresEditados.monto} type="number" min='0' className="w-full px-2 py-1 text-sm text-black border-2 border-yellow-600 rounded-md" onChange={(e) => setValoresEditados({ ...valoresEditados, monto: e.target.value})}/>
-                ) : formatearPesos(comprobante.monto)}
-              </td>
-              <td className="py-3 px-5 capitalize">{comprobante.usuario?.nombre || "Sin usuario"}</td>
-              <td className="py-3 px-5 flex gap-3 items-center">
-                <FaImage className="text-blue-500 hover:text-blue-700 text-lg cursor-pointer" onClick={() => abrirImagen(comprobante.imagenComprobante)} />
-                <MdEdit className="text-yellow-500 hover:text-yellow-700 text-lg cursor-pointer" onClick={() => comenzarEdicion(comprobante._id, comprobante)} />
-                <FaSave className="text-green-600 hover:text-green-700 text-lg cursor-pointer" onClick={() => guardarCambios(comprobante._id)} />
-                <FaTrashAlt className="text-red-500 hover:text-red-700 text-lg cursor-pointer" onClick={() => confirmarEliminacion(comprobante._id)} />
-              </td>
+      {/* Tabla escritorio */}
+      <div className="hidden md:block">
+        <table className="w-full bg-white text-black shadow rounded-lg overflow-hidden">
+          <thead className="bg-secondary-1">
+            <tr>
+              <th className="px-4 py-3 text-left">N° Comprobante</th>
+              <th className="px-4 py-3 text-left">Método de pago</th>
+              <th className="px-4 py-3 text-left">Tipo</th>
+              <th className="px-4 py-3 text-left">Comprobante</th>
+              <th className="px-4 py-3 text-left">Descripción</th>
+              <th className="px-4 py-3 text-left">Monto</th>
+              <th className="px-4 py-3 text-left">Usuario</th>
+              <th className="px-4 py-3 text-left">Acciones</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {comprobantesFiltrados.map((comp) => (
+              <tr key={comp._id} className="border-t">
+                <td className="px-4 py-3">
+                  {editandoId === comp._id ? (
+                    <input
+                      value={valoresEditados.nroComprobante}
+                      onChange={(e) => setValoresEditados({ ...valoresEditados, nroComprobante: e.target.value })}
+                      className="w-full px-2 py-1 text-sm text-black border border-yellow-500 rounded-md"
+                    />
+                  ) : comp.nroComprobante}
+                </td>
+                <td className="px-4 py-3 capitalize">{comp.metodoPago}</td>
+                <td className="px-4 py-3 capitalize">{comp.tipo}</td>
+                <td className="px-4 py-3 capitalize">{comp.tipoComprobante}</td>
+                <td className="px-4 py-3">
+                  {editandoId === comp._id ? (
+                    <input
+                      value={valoresEditados.descripcion}
+                      onChange={(e) => setValoresEditados({ ...valoresEditados, descripcion: e.target.value })}
+                      className="w-full px-2 py-1 text-sm text-black border border-yellow-500 rounded-md"
+                    />
+                  ) : comp.descripcion}
+                </td>
+                <td className="px-4 py-3">
+                  {editandoId === comp._id ? (
+                    <input
+                      type="number"
+                      value={valoresEditados.monto}
+                      onChange={(e) => setValoresEditados({ ...valoresEditados, monto: e.target.value })}
+                      className="w-full px-2 py-1 text-sm text-black border border-yellow-500 rounded-md"
+                    />
+                  ) : formatearPesos(comp.monto)}
+                </td>
+                <td className="px-4 py-3 capitalize">{comp.usuario?.nombre || "Sin usuario"}</td>
+                <td className="px-4 py-3">
+                  <div className="flex items-center gap-2">
+                    <FaImage className="text-blue-600 hover:text-blue-800 cursor-pointer" onClick={() => abrirImagen(comp.imagenComprobante)} />
+                    <MdEdit className="text-yellow-500 hover:text-yellow-700 cursor-pointer" onClick={() => comenzarEdicion(comp._id, comp)} />
+                    <FaSave className="text-green-600 hover:text-green-700 cursor-pointer" onClick={() => guardarCambios(comp._id)} />
+                    <FaTrashAlt className="text-red-500 hover:text-red-700 cursor-pointer" onClick={() => confirmarEliminacion(comp._id)} />
+                  </div>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
 
-      {/* VISTA MOVIL EN CARDS */}
-      <div className="md:hidden flex flex-col gap-4 text-black">
+      {/* Vista móvil con cards */}
+      <div className="md:hidden flex flex-col gap-6 mt-4">
         {comprobantesFiltrados.map((comp) => (
-          <div key={comp._id} className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-4 space-y-2 border border-gray-200 dark:border-gray-700">
-            <div>
-              <span className="font-semibold text-sm text-gray-700 dark:text-gray-300">N° Comprobante:</span>
-              <p className="capitalize text-black dark:text-white">
-                {editandoId === comp._id ? (
-                  <input
-                    value={valoresEditados.nroComprobante}
-                    onChange={(e) => setValoresEditados({ ...valoresEditados, nroComprobante: e.target.value })}
-                    className="text-black w-full border border-yellow-500 rounded p-1 mt-1 capitalize"
-                  />
-                ) : (
-                  comp.nroComprobante
-                )}
-              </p>
-            </div>
-            <p className="capitalize text-sm"><strong>Método de pago:</strong> {comp.metodoPago}</p>
-            <p className="capitalize text-sm"><strong>Tipo comprobante:</strong> {comp.tipoComprobante}</p>
-            <p className="capitalize text-sm"><strong>Tipo:</strong> {comp.tipo}</p>
-            <div>
-              <span className="font-semibold text-sm text-gray-700 dark:text-gray-300">Descripción:</span>
-              <p className="text-black dark:text-white">
-                {editandoId === comp._id ? (
-                  <input
-                    value={valoresEditados.descripcion}
-                    onChange={(e) => setValoresEditados({ ...valoresEditados, descripcion: e.target.value })}
-                    className="text-black w-full border border-yellow-500 rounded p-1 mt-1 capitalize"
-                  />
-                ) : (
-                  comp.descripcion
-                )}
-              </p>
-            </div>
-            <div>
-              <span className="font-semibold text-sm text-gray-700 dark:text-gray-300">Monto:</span>
-              <p className="text-black dark:text-white">
-                {editandoId === comp._id ? (
-                  <input
-                    type="number"
-                    min="0"
-                    value={valoresEditados.monto}
-                    onChange={(e) => setValoresEditados({ ...valoresEditados, monto: e.target.value })}
-                    className="text-black w-full border border-yellow-500 rounded p-1 mt-1"
-                  />
-                ) : (
-                  formatearPesos(comp.monto)
-                )}
-              </p>
-            </div>
-            <p className="capitalize text-sm"><strong>Usuario:</strong> {comp.usuario?.nombre || "Sin usuario"}</p>
-            <div className="flex justify-start gap-3 pt-2">
-              <FaImage className="text-blue-500 text-lg cursor-pointer" onClick={() => abrirImagen(comp.imagenComprobante)} />
-              {editandoId === comp._id ? (
-                <FaSave className="text-green-600 text-lg cursor-pointer" onClick={() => guardarCambios(comp._id)} />
-              ) : (
-                <MdEdit className="text-yellow-500 text-lg cursor-pointer" onClick={() => comenzarEdicion(comp._id, comp)} />
-              )}
-              <FaTrashAlt className="text-red-500 text-lg cursor-pointer" onClick={() => confirmarEliminacion(comp._id)} />
+          <div key={comp._id} className="bg-white border border-gray-200 rounded-lg shadow-md p-4 space-y-2 text-black">
+            <p className="capitalize"><strong>N° Comprobante:</strong> {comp.nroComprobante}</p>
+            <p className="capitalize"><strong>Método de pago:</strong> {comp.metodoPago}</p>
+            <p className="capitalize"><strong>Tipo:</strong> {comp.tipo}</p>
+            <p className="capitalize"><strong>Comprobante:</strong> {comp.tipoComprobante}</p>
+            <p ><strong>Descripción:</strong> {comp.descripcion}</p>
+            <p className="capitalize"><strong>Monto:</strong> {formatearPesos(comp.monto)}</p>
+            <p className="capitalize"><strong>Usuario:</strong> {comp.usuario?.nombre || "Sin usuario"}</p>
+            <div className="flex gap-3 pt-2">
+              <FaImage className="text-blue-600 hover:text-blue-800 text-lg cursor-pointer" onClick={() => abrirImagen(comp.imagenComprobante)} />
+              <MdEdit className="text-yellow-500 hover:text-yellow-700 text-lg cursor-pointer" onClick={() => comenzarEdicion(comp._id, comp)} />
+              <FaSave className="text-green-600 hover:text-green-700 text-lg cursor-pointer" onClick={() => guardarCambios(comp._id)} />
+              <FaTrashAlt className="text-red-500 hover:text-red-700 text-lg cursor-pointer" onClick={() => confirmarEliminacion(comp._id)} />
             </div>
           </div>
         ))}
       </div>
 
-      {/* MODAL */}
+      {/* Modal imagen */}
       {imagenSeleccionada && (
         <div className="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50">
           <div className="relative bg-white p-4 rounded-lg shadow-lg max-w-3xl max-h-[100vh]">

@@ -15,7 +15,7 @@ const chartConfig = {
   type: "pie",
   width: 280,
   height: 280,
-  series: [44, 55, 13, 43, 22],
+  series: [1, 1, 1, 1, 1],
   options: {
     chart: {
       toolbar: {
@@ -26,7 +26,7 @@ const chartConfig = {
       show: "",
     },
     dataLabels: {
-      enabled: false,
+      enabled: true,
     },
     colors: ["#020617", "#ff8f00", "#00897b", "#1e88e5", "#d81b60"],
     legend: {

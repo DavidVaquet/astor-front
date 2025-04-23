@@ -14,7 +14,7 @@ export const Header = () => {
   },[])
 
   return (
-    <header className=' h-[7vh] md:h-[10vh] border-b border-secondary-100 p-8 flex items-center justify-end'>
+    <header className=' h-[7vh] md:h-[10vh] bg-secondary-100 border-b border-secondary-100 p-8 flex items-center justify-end'>
 
     <nav className='flex items-center gap-x-4'>
       <button>
