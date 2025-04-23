@@ -59,24 +59,28 @@ export const HomeInmobiliaria = () => {
           totalTickets={formatearPesos(resumen?.inmobiliaria?.ingreso)}
           text='Balance positivo'
           link='/home/Comprobantes-Inmobiliaria'
+          informacion='Agregar nuevo comprobante'
           />
         <CardTicket 
           ticket='pendiente'
           totalTickets='0'
           text='Balance pendiente'
           link='/home/Comprobantes-Inmobiliaria'
+          informacion='Agregar nuevo comprobante'
           />
         <CardTicket 
           ticket='egreso'
           totalTickets={formatearPesos(resumen?.inmobiliaria?.egreso)}
           text='Balance negativo'
           link='/home/Comprobantes-Inmobiliaria'
+          informacion='Agregar nuevo comprobante'
           />
         <CardTicket 
           ticket='total'
           totalTickets={formatearPesos(resumen?.inmobiliaria?.balance)}
           text='Balance total'
           link='/home/Comprobantes-Inmobiliaria'
+          informacion='Agregar nuevo comprobante'
           />
       </div>
 

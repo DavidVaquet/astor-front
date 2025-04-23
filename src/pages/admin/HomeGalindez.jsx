@@ -60,24 +60,28 @@ export const HomeGalindez = () => {
           totalTickets={formatearPesos(resumen?.astorGalindez?.ingreso)}
           text='Balance positivo'
           link='/home/Comprobantes-Galindez'
+          informacion='Agregar nuevo comprobante'
           />
         <CardTicket 
           ticket='pendiente'
           totalTickets='0'
           text='Balance pendiente'
           link='/home/Comprobantes-Galindez'
+          informacion='Agregar nuevo comprobante'
           />
         <CardTicket 
           ticket='egreso'
           totalTickets={formatearPesos(resumen?.astorGalindez?.egreso)}
           text='Balance negativo'
           link='/home/Comprobantes-Galindez'
+          informacion='Agregar nuevo comprobante'
           />
         <CardTicket 
           ticket='total'
           totalTickets={formatearPesos(resumen?.astorGalindez?.balance)}
           text='Balance total'
           link='/home/Comprobantes-Galindez'
+          informacion='Agregar nuevo comprobante'
           />
       </div>
 

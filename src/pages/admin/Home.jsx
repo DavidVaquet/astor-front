@@ -34,21 +34,28 @@ export const Home = () => {
           ticket='ingreso'
           totalTickets={formatearPesos(resumen?.general?.ingreso)}
           text='Balance positivo'
+          informacion='Ver comprobantes Astor Fray'
+          link='/home/Listado-Fray'
         />
         <CardTicket
           ticket='pendiente'
           totalTickets='0'
           text='Balance pendiente'
+          // informacion='Listar comprobantes Galindez'
         />
         <CardTicket
           ticket='egreso'
           totalTickets={formatearPesos(resumen?.general?.egreso)}
           text='Balance negativo'
+          informacion='Ver comprobantes Astor Galindez'
+          link='/home/Listado-Galindez'
         />
         <CardTicket
           ticket='total'
           totalTickets={formatearPesos(resumen?.general?.balance)}
           text='Balance total'
+          informacion='Ver comprobantes Inmobiliaria'
+          link='/home/Listado-Inmobiliaria'
         />
       </div>
 

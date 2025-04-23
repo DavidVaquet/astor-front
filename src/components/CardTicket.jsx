@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom';
 
 const CardTicket = (props) => {
 
-const {ticket, totalTickets, text, link} = props;
+const {ticket, totalTickets, text, link, informacion} = props;
 
 let status = '';
 let textColor = '';
@@ -86,7 +86,7 @@ switch(ticket) {
         </div>
         <div>
             <hr className='border border-separate border-gray-200/50 my-4' />
-            <Link to={link} className='flex items-center gap-2 text-blue-500 font-medium'><RiAddLine/>Agregar nuevo comprobante</Link>
+            <Link to={link} className='flex items-center gap-2 text-blue-500 font-medium'><RiAddLine/>{informacion}</Link>
         </div>
       </div>
       </div>

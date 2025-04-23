@@ -15,7 +15,6 @@ export const login = async (email, password) => {
       }
   
       const data = await respuesta.json();
-      console.log('Respuesta login:', data);
       localStorage.setItem('token', data.token);
       localStorage.setItem('roles', JSON.stringify(data.roles));
       localStorage.setItem('usuarioId', data.usuarioId);

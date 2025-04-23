@@ -53,24 +53,28 @@ const cargarDatos = useCallback(() => cargarResumenBalances(setResumen, setError
           totalTickets={formatearPesos(resumen?.astorFray?.ingreso)}
           text='Balance positivo'
           link='/home/Comprobantes-Fray'
+          informacion='Agregar nuevo comprobante'
           />
         <CardTicket 
           ticket='pendiente'
           totalTickets='0'
           text='Balance pendiente'
           link='/home/Comprobantes-Fray'
+          informacion='Agregar nuevo comprobante'
           />
         <CardTicket 
           ticket='egreso'
           totalTickets={formatearPesos(resumen?.astorFray?.egreso)}
           text='Balance negativo'
           link='/home/Comprobantes-Fray'
+          informacion='Agregar nuevo comprobante'
           />
         <CardTicket 
           ticket='total'
           totalTickets={formatearPesos(resumen?.astorFray?.balance)}
           text='Balance total'
           link='/home/Comprobantes-Fray'
+          informacion='Agregar nuevo comprobante'
           />
       </div>
 

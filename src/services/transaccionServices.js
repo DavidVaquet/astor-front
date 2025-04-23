@@ -31,7 +31,6 @@ export const nuevoComprobante = async(tipo, monto, tipoComprobante, nroComproban
 
         if (!respuesta.ok) {
             const data = await respuesta.json();
-            console.error("⚠️ Backend respondió:", data);
             throw new Error(data.msg || data.error || 'Error al subir el comprobante');
           }
 
@@ -65,11 +64,7 @@ export const obtenerComprobantesPorLocal = async (local) => {
 export const eliminarComprobantes = async (id) => {
 
     const token = localStorage.getItem('token');
-  console.log('🔐 Token enviado:', token);
-  console.log({
-    'Authorization': `Bearer ${token}`,
-    'Content-Type': 'application/json'
-  });
+  
     try {
       const respuesta = await fetch(`${API_URL}/eliminarComprobante/${id}`, {
         method: 'DELETE',

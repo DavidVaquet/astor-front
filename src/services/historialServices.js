@@ -93,9 +93,8 @@ export const editarHistorialGeneral = async (id, valoresActualizados) => {
             throw new Error(data.msg || 'Error al editar el historial general')
         };
 
-        console.log("Status:", respuesta.status); 
+        
         const data = await respuesta.json();
-        console.log("Respuesta:", data); 
         return data;
     } catch (error) {
         throw new Error(error.message || 'Error al editar el historial general')
