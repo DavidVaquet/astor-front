@@ -1,51 +1,52 @@
 "use client"
 
-import { useEffect, useState, useContext } from "react"
+import { useContext, useEffect, useState } from "react"
+
 import {
-  manejarActualizarComprobante,
   manejarEliminarComprobante,
   manejarObtenerComprobantesPorLocal,
-} from "../../controllers/transaccionController"
-import { formatearPesos } from "../../helpers/formatearPesos"
+  manejarActualizarComprobante,
+} from "../controllers/transaccionController"
+
+import { formatearPesos } from "../helpers/formatearPesos"
+import { formatearFecha } from "../helpers/formatearFecha"
 import { FaImage, FaTrashAlt, FaSave } from "react-icons/fa"
 import { MdEdit } from "react-icons/md"
 import { toast } from "react-toastify"
-import { ComprobanteContext } from "../../context/ComprobanteContext"
-import Swal from "sweetalert2"
-import { formatearFecha } from "../../helpers/formatearFecha"
+import { ComprobanteContext } from "../context/ComprobanteContext"
 
-export const ComprobantesInmobiliaria = () => {
-  const { recargarComprobantes, toggleRecargar } = useContext(ComprobanteContext)
+// SweetAlert2
+import Swal from "sweetalert2"
+import withReactContent from "sweetalert2-react-content"
+
+const MySwal = withReactContent(Swal)
+
+export const ListarComprobantes = ({ localProp, setCambio }) => {
+  // UseContext
+  const { recargarComprobantes, toggleRecargar, setCambioGeneral, setCambioFray } = useContext(ComprobanteContext)
+  const comprobanteContext = useContext(ComprobanteContext)
+
+  // SetStates
   const [comprobantes, setComprobantes] = useState([])
   const [error, setError] = useState("")
-  const [fechaFiltro, setFechaFiltro] = useState("")
   const [success, setSuccess] = useState("")
+  const [fechaFiltro, setFechaFiltro] = useState("")
   const [imagenSeleccionada, setImagenSeleccionada] = useState(null)
   const [editandoId, setEditandoId] = useState(null)
   const [valoresEditados, setValoresEditados] = useState({})
   const [busqueda, setBusqueda] = useState("")
 
+  const local = localProp
+
   const abrirImagen = (url) => setImagenSeleccionada(url)
   const cerrarImagen = () => setImagenSeleccionada(null)
-
-  const local = "inmobiliaria"
 
   useEffect(() => {
     manejarObtenerComprobantesPorLocal({ local, setComprobantes, setError })
   }, [local, recargarComprobantes])
 
-  const comprobantesFiltrados = comprobantes.filter((comp) => {
-    const coincideFecha = fechaFiltro ? new Date(comp.fecha).toISOString().slice(0, 10) === fechaFiltro : true
-    const coincideBusqueda = busqueda
-      ? comp.descripcion?.toLowerCase().includes(busqueda.toLowerCase()) ||
-        comp.usuario?.nombre?.toLowerCase().includes(busqueda.toLowerCase()) ||
-        comp.tipo?.toLowerCase().includes(busqueda.toLowerCase())
-      : true
-    return coincideFecha && coincideBusqueda
-  })
-
   const confirmarEliminacion = async (id) => {
-    const result = await Swal.fire({
+    const result = await MySwal.fire({
       title: "¿Estás seguro?",
       text: "Este comprobante será eliminado permanentemente",
       icon: "warning",
@@ -57,10 +58,33 @@ export const ComprobantesInmobiliaria = () => {
     })
 
     if (result.isConfirmed) {
-      await manejarEliminarComprobante({ id, setError, setSuccess, toast, toggleRecargar })
+      await manejarEliminarComprobante({
+        id,
+        setError,
+        setSuccess,
+        toast,
+        toggleRecargar,
+      })
+
+      setCambio((prev) => prev + 1)
+      setCambioGeneral((prev) => prev + 1)
     }
   }
 
+  // Filtros de busqueda
+  const comprobantesFiltrados = comprobantes.filter((comp) => {
+    const coincideFecha = fechaFiltro ? new Date(comp.fecha).toISOString().slice(0, 10) === fechaFiltro : true
+
+    const coincideBusqueda = busqueda
+      ? comp.descripcion?.toLowerCase().includes(busqueda.toLowerCase()) ||
+        comp.usuario?.nombre?.toLowerCase().includes(busqueda.toLowerCase()) ||
+        comp.tipo?.toLowerCase().includes(busqueda.toLowerCase())
+      : true
+
+    return coincideFecha && coincideBusqueda
+  })
+
+  // Funcion para comenzar a editar
   const comenzarEdicion = (id, comprobante) => {
     setEditandoId(id)
     setValoresEditados({
@@ -70,13 +94,24 @@ export const ComprobantesInmobiliaria = () => {
     })
   }
 
+  //  Funcion para guardar los cambios
   const guardarCambios = async (id) => {
-    await manejarActualizarComprobante({ id, nuevosValores: valoresEditados, setError, setSuccess, toast, toggleRecargar })
+    await manejarActualizarComprobante({
+      id,
+      nuevosValores: valoresEditados,
+      setError,
+      setSuccess,
+      toast,
+      toggleRecargar,
+    })
     setEditandoId(null)
+    setCambio((prev) => prev + 1)
+    setCambioGeneral((prev) => prev + 1)
   }
 
   return (
     <div className="overflow-x-auto px-2 py-6 rounded-lg bg-blanco dark:bg-secondary-100 shadow-xl">
+      {/* Filtros */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
         <div className="flex flex-col">
           <label className="text-black dark:text-white font-semibold text-sm mb-4">📅 Filtrar por fecha:</label>
@@ -101,7 +136,7 @@ export const ComprobantesInmobiliaria = () => {
 
       {error && <p className="text-red-500 font-medium mb-4">❌ Error: {error}</p>}
 
-      {/* Vista escritorio */}
+      {/* Tabla escritorio */}
       <div className="hidden md:block">
         <table className="w-full bg-white dark:bg-gray-800 text-sm text-black dark:text-white shadow-md rounded-lg overflow-hidden">
           <thead className="bg-gray-200 dark:bg-secondary-900 dark:text-white text-gray-700">
@@ -136,11 +171,13 @@ export const ComprobantesInmobiliaria = () => {
                     comp.nroComprobante
                   )}
                 </td>
-                <td className="px-6 py-4 capitalize">{comp.metodoPago}</td>
-                <td className={`px-6 py-4 capitalize ${comp.tipo === 'ingreso' ? 'text-green-500' : 'text-red-500'}`}>
-                {comp.tipo}
+                <td className="px-6 py-4 capitalize">
+                  {comp.metodoPago?.toLowerCase() === "qr" ? "QR" : comp.metodoPago}
                 </td>
-                <td className="px-6 py-4 capitalize">{comp.tipoComprobante}</td>
+                <td className={`px-6 py-4 capitalize ${comp.tipo === 'ingreso' ? 'text-green-500' : 'text-red-500'}`}>{comp.tipo}</td>
+                <td className="px-6 py-4 capitalize text-center">
+                  {comp.tipoComprobante?.toLowerCase() === "qr" ? "QR" : comp.tipoComprobante}
+                </td>
                 <td className="px-6 py-4 truncate max-w-[200px]">
                   {editandoId === comp._id ? (
                     <input
@@ -165,13 +202,25 @@ export const ComprobantesInmobiliaria = () => {
                   )}
                 </td>
                 <td className="px-6 py-4 capitalize">{comp.usuario?.nombre || "Sin usuario"}</td>
-                <td className="px-6 py-4 capitalize">{comp.cuenta || "—"}</td>
+                <td className="px-6 py-4 capitalize hidden lg:table-cell">{comp.cuenta || "—"}</td>
                 <td className="px-6 py-4 text-center">
                   <div className="flex justify-center items-center gap-3">
-                    <FaImage className="text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 cursor-pointer" onClick={() => abrirImagen(comp.imagenComprobante)} />
-                    <MdEdit className="text-yellow-500 dark:text-yellow-400 hover:text-yellow-700 dark:hover:text-yellow-300 cursor-pointer" onClick={() => comenzarEdicion(comp._id, comp)} />
-                    <FaSave className="text-green-600 dark:text-green-400 hover:text-green-700 dark:hover:text-green-300 cursor-pointer" onClick={() => guardarCambios(comp._id)} />
-                    <FaTrashAlt className="text-red-500 dark:text-red-400 hover:text-red-700 dark:hover:text-red-300 cursor-pointer" onClick={() => confirmarEliminacion(comp._id)} />
+                    <FaImage
+                      className="text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 cursor-pointer"
+                      onClick={() => abrirImagen(comp.imagenComprobante)}
+                    />
+                    <MdEdit
+                      className="text-yellow-500 dark:text-yellow-400 hover:text-yellow-700 dark:hover:text-yellow-300 cursor-pointer"
+                      onClick={() => comenzarEdicion(comp._id, comp)}
+                    />
+                    <FaSave
+                      className="text-green-600 dark:text-green-400 hover:text-green-700 dark:hover:text-green-300 cursor-pointer"
+                      onClick={() => guardarCambios(comp._id)}
+                    />
+                    <FaTrashAlt
+                      className="text-red-500 dark:text-red-400 hover:text-red-700 dark:hover:text-red-300 cursor-pointer"
+                      onClick={() => confirmarEliminacion(comp._id)}
+                    />
                   </div>
                 </td>
               </tr>
@@ -180,7 +229,7 @@ export const ComprobantesInmobiliaria = () => {
         </table>
       </div>
 
-            {/* Vista móvil */}
+      {/* Vista móvil */}
       <div className="md:hidden flex flex-col gap-6 mt-4">
         {comprobantesFiltrados.map((comp) => (
           <div
@@ -188,6 +237,7 @@ export const ComprobantesInmobiliaria = () => {
             className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-600 rounded-lg shadow-md p-4 space-y-2 text-black dark:text-white"
           >
             <p><strong>Fecha:</strong> {formatearFecha(comp.fecha)}</p>
+
             <p className="capitalize">
               <strong>N° Comprobante:</strong>{" "}
               {editandoId === comp._id ? (
@@ -200,9 +250,11 @@ export const ComprobantesInmobiliaria = () => {
                 comp.nroComprobante
               )}
             </p>
+
             <p className="capitalize"><strong>Método de pago:</strong> {comp.metodoPago}</p>
-            <p className="capitalize"><strong>Tipo:</strong> {comp.tipo}</p>
+            <p className={`capitalize ${comp.tipo === 'ingreso' ? 'text-green-500' : 'text-red-500' }`}><strong>Tipo:</strong> {comp.tipo}</p>
             <p className="capitalize"><strong>Comprobante:</strong> {comp.tipoComprobante}</p>
+
             <p>
               <strong>Descripción:</strong>{" "}
               {editandoId === comp._id ? (
@@ -215,7 +267,8 @@ export const ComprobantesInmobiliaria = () => {
                 comp.descripcion
               )}
             </p>
-            <p className="capitalize">
+
+            <p className='capitalize'>
               <strong>Monto:</strong>{" "}
               {editandoId === comp._id ? (
                 <input
@@ -228,8 +281,10 @@ export const ComprobantesInmobiliaria = () => {
                 formatearPesos(comp.monto)
               )}
             </p>
+
             <p className="capitalize"><strong>Usuario:</strong> {comp.usuario?.nombre || "Sin usuario"}</p>
             <p className="capitalize"><strong>Cuenta:</strong> {comp.cuenta || "—"}</p>
+
             <div className="flex gap-3 pt-2">
               <FaImage className="text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 text-lg cursor-pointer" onClick={() => abrirImagen(comp.imagenComprobante)} />
               <MdEdit className="text-yellow-500 dark:text-yellow-400 hover:text-yellow-700 dark:hover:text-yellow-300 text-lg cursor-pointer" onClick={() => comenzarEdicion(comp._id, comp)} />
@@ -239,6 +294,7 @@ export const ComprobantesInmobiliaria = () => {
           </div>
         ))}
       </div>
+
       {/* Modal imagen */}
       {imagenSeleccionada && (
         <div className="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50">

@@ -1,7 +1,7 @@
 const API_URL = `${import.meta.env.VITE_API_URL}/transacciones`;
 
 
-export const nuevoComprobante = async(tipo, monto, tipoComprobante, nroComprobante, imagenComprobante, local, descripcion, metodoPago, usuario) => {
+export const nuevoComprobante = async (tipo, monto, tipoComprobante, nroComprobante, imagenComprobante, local, descripcion, metodoPago, usuario, cuenta, montoAlquiler, porcentaje) => {
 
     const token = localStorage.getItem('token');
     const body = {
@@ -13,7 +13,10 @@ export const nuevoComprobante = async(tipo, monto, tipoComprobante, nroComproban
         local,
         metodoPago,
         descripcion,
-        usuario
+        usuario,
+        cuenta,
+        montoAlquiler,
+        porcentaje
     };
 
     try {
@@ -92,9 +95,9 @@ export const eliminarComprobantes = async (id) => {
 
   export const actualizarComprobante = async(id, datos) => {
 
-    const token = localStorage.getItem('token');
-
+    
     try {
+      const token = localStorage.getItem('token');
       
       const res = await fetch(`${API_URL}/editarComprobante/${id}`, {
         method: 'PUT',

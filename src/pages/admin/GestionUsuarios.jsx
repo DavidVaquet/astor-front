@@ -131,7 +131,7 @@ export const GestionUsuarios = () => {
 
     return (
         <div className="min-h-screen  text-gray-300">
-            <h2 className="text-3xl font-bold text-center text-white mb-10 uppercase tracking-wider">
+            <h2 className="text-3xl font-bold text-center dark:text-white text-black mb-10 uppercase tracking-wider">
                 Gestión de <span className="text-primary">Usuarios</span>
             </h2>
 
@@ -154,7 +154,9 @@ export const GestionUsuarios = () => {
                     return (
                         <div
                             key={usuario._id}
-                            className={`relative bg-secondary-900 border border-secondary-700 shadow-xl rounded-lg overflow-hidden transition duration-300 ease-in-out hover:shadow-2xl hover:border-primary/50 flex flex-col ${isEditingCurrentUser ? 'ring-2 ring-offset-2 ring-offset-secondary-900 ring-primary' : ''}`}
+                            className={`relative bg-blanco dark:bg-secondary-900 border border-primary shadow-xl rounded-lg overflow-hidden transition 
+                            duration-300 ease-in-out hover:shadow-2xl hover:border-primary/50 flex flex-col
+                             ${isEditingCurrentUser ? 'ring-2 ring-offset-2 dark:ring-offset-secondary-900 border-none ring-primary' : ''}`}
                         >
                             {/* Edit Indicator */}
                             {isEditingCurrentUser && (
@@ -165,7 +167,8 @@ export const GestionUsuarios = () => {
                             <div className="p-5 flex-grow"> {/* Use flex-grow to push actions down */}
                                 <div className="flex flex-col items-center mb-4">
                                     {/* Avatar */}
-                                    <div className={`mb-3 w-24 h-24 rounded-full flex items-center justify-center text-white text-4xl border-2 ${isEditingCurrentUser ? 'border-primary bg-gray-700' : (usuario.estado ? 'border-green-500 bg-secondary-100' : 'border-gray-500 bg-gray-700')}`}>
+                                    <div className={`mb-3 w-24 h-24 rounded-full flex items-center justify-center text-primary dark:text-white text-4xl border-2
+                                    ${isEditingCurrentUser ? 'border-primary bg-blanco dark:bg-gray-700' : (usuario.estado ? 'border-green-500 bg-bclaro dark:bg-secondary-100' : 'border-gray-500 bg-gray-700')}`}>
                                         <FaUserCircle />
                                     </div>
 
@@ -176,47 +179,47 @@ export const GestionUsuarios = () => {
                                             name="nombre"
                                             value={valoresEditados.nombre}
                                             onChange={handleInputChange}
-                                            className="text-center text-lg font-semibold px-2 py-1 bg-gray-700 border border-gray-600 rounded-md text-white focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary mb-1 w-full"
+                                            className="text-center text-lg font-semibold px-2 py-1  dark:bg-gray-700 border border-gray-600 rounded-md dark:text-white text-black focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary mb-1 w-full"
                                             placeholder="Nombre"
                                         />
                                     ) : (
-                                        <h3 className="text-xl font-semibold text-white capitalize text-center mb-1">{usuario.nombre}</h3>
+                                        <h3 className="text-xl font-semibold dark:text-white text-black capitalize text-center mb-1">{usuario.nombre}</h3>
                                     )}
 
                                     {/* Email */}
                                     {isEditingCurrentUser ? (
                                          <div className='relative w-full mb-3'>
-                                             <RiMailFill className='absolute top-1/2 -translate-y-1/2 left-3 text-primary/70' />
+                                             <RiMailFill className='absolute top-1/2 -translate-y-1/2 left-3 text-black dark:text-primary/70' />
                                              <input
                                                  type="email"
                                                  name="email"
                                                  value={valoresEditados.email}
                                                  onChange={handleInputChange}
-                                                 className="text-sm pl-10 pr-2 py-1 bg-gray-700 border border-gray-600 rounded-md text-white focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary w-full"
+                                                 className="text-sm pl-10 pr-2 py-1 dark:bg-gray-700 border  border-gray-600 rounded-md dark:text-white text-black focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary w-full"
                                                  placeholder="Email"
                                              />
                                          </div>
                                     ) : (
-                                        <p className="text-sm text-gray-400 text-center mb-3 flex items-center gap-2 justify-center">
+                                        <p className="text-sm dark:text-gray-400 text-black text-center mb-3 flex items-center gap-2 justify-center">
                                             <RiMailFill className="text-primary/70" /> {usuario.email}
                                         </p>
                                     )}
                                 </div>
 
                                 {/* Separator */}
-                                <hr className="border-secondary-700 w-full mb-4"/>
+                                <hr className="border-secondary-900 dark:border-gray-400 w-full mb-4"/>
 
                                 {/* Details Section */}
                                 <div className="w-full space-y-3 text-sm mb-4">
                                     {/* Rol */}
                                     <div className="flex items-center justify-between gap-2">
-                                        <span className="text-gray-400 font-medium flex items-center gap-2 shrink-0"><FaBriefcase className="text-primary/80"/> Rol:</span>
+                                        <span className="dark:text-gray-400 text-black font-medium flex items-center gap-2 shrink-0"><FaBriefcase className="text-primary/80"/> Rol:</span>
                                         {isEditingCurrentUser ? (
                                             <select
                                                 name="roles"
                                                 value={valoresEditados.roles}
                                                 onChange={handleInputChange}
-                                                className="px-2 py-1 border border-gray-600 rounded-md text-white text-sm bg-gray-700 focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary w-full max-w-[calc(100%-60px)]" // Adjust width
+                                                className="px-2 py-1 border border-gray-600 rounded-md dark:text-white text-black  text-sm dark:bg-gray-700 focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary w-full max-w-[calc(100%-60px)]" // Adjust width
                                             >
                                                 <option className="text-primary" value="" disabled>Seleccione un rol</option>
                                                 {roleOptions.map(option => (
@@ -225,7 +228,7 @@ export const GestionUsuarios = () => {
                                             </select>
                                         ) : (
                                              // Display translated role, assuming only one role from the backend
-                                             <span className="text-gray-200 font-medium text-right truncate" title={getRoleLabel(usuario.roles[0])}>
+                                             <span className="dark:text-gray-200 text-black font-medium text-right truncate" title={getRoleLabel(usuario.roles[0])}>
                                                  {getRoleLabel(usuario.roles[0])}
                                              </span>
                                         )}
@@ -233,7 +236,7 @@ export const GestionUsuarios = () => {
 
                                     {/* Estado */}
                                     <div className="flex items-center justify-between gap-2">
-                                        <span className="text-gray-400 font-medium flex items-center gap-2 shrink-0">
+                                        <span className="dark:text-gray-400 text-black font-medium flex items-center gap-2 shrink-0">
                                            {/* Consistent icon based on actual status, even during edit */}
                                            {usuario.estado ? <FaCheckCircle className="text-green-500"/> : <FaMinusCircle className="text-red-500"/>}
                                            Estado:
@@ -244,7 +247,7 @@ export const GestionUsuarios = () => {
                                                 // Ensure value matches option values ('true' or 'false' string)
                                                 value={String(valoresEditados.estado)}
                                                 onChange={handleInputChange}
-                                                className="px-2 py-1 border border-gray-600 rounded-md text-white text-sm bg-gray-700 focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary w-full max-w-[calc(100%-70px)]" // Adjust width
+                                                className="px-2 py-1 border border-gray-600 rounded-md dark:text-white text-black text-sm dark:bg-gray-700 focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary w-full max-w-[calc(100%-70px)]" // Adjust width
                                             >
                                                 <option value="true">Activo</option>
                                                 <option value="false">Inactivo</option>
@@ -259,7 +262,7 @@ export const GestionUsuarios = () => {
                             </div> {/* End Card Body */}
 
                             {/* Action Buttons Footer */}
-                            <div className="w-full p-4 bg-secondary-900/50 border-t border-secondary-700 flex justify-center items-center gap-3 mt-auto"> {/* Push to bottom */}
+                            <div className="w-full p-4 dark:bg-secondary-900/50 bg-blanco border-t border-secondary-700 flex justify-center items-center gap-3 mt-auto"> {/* Push to bottom */}
                                 {isEditingCurrentUser ? (
                                     <>
                                         <button

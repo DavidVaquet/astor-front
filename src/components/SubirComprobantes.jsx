@@ -1,52 +1,46 @@
-import { useState, useEffect, useRef, useContext } from 'react';
-import { manejarNuevaTransaccion } from '../../controllers/transaccionController';
-import { ComprobanteContext } from '../../context/ComprobanteContext';
-import { uploadImgCloudinary } from '../../services/uploadService';
-import { enviarMensajeNuevoComprobante } from '../../helpers/useBroadcastChannelHelper';
-import { comision } from '../../helpers/comision';
-import fax from '../../assets/comprobante.jpg';
+import { useState, useEffect, useRef } from 'react';
+import { manejarNuevaTransaccion } from '../controllers/transaccionController';
+import { useContext } from 'react';
+import { ComprobanteContext } from '../context/ComprobanteContext';
+import fax from '../assets/comprobante.jpg';
 import { RiEdit2Line } from "react-icons/ri";
-import { Link } from 'react-router-dom';
+import { uploadImgCloudinary } from '../services/uploadService';
 import { toast } from 'react-toastify';
-import { formatearPesos } from '../../helpers/formatearPesos';
+import { enviarMensajeNuevoComprobante } from '../helpers/useBroadcastChannelHelper';
+  
+  export const SubirComprobantes = ({locale, setCambio, titulo, channelBroadCast}) => {
 
-
-  export const Inmobiliaria = () => {
-
-
-
-  const { toggleRecargar, setCambioGeneral, setCambioInmobiliaria } = useContext(ComprobanteContext);  
   const [tipo, setTipo] = useState('ingreso');
   const [tipoComprobante, setTipoComprobante] = useState('factura');
+  const [monto, setMonto] = useState('');
   const [descripcion, setDescripcion] = useState('');
   const [metodoPago, setMetodoPago] = useState('efectivo');
   const [nroComprobante, setNroComprobante] = useState('');
   const [imagenComprobante, setImgComprobante] = useState('');
-  const [local] = useState('inmobiliaria');
   const [usuario, setUsuario] = useState('');
-  const [montoAlquiler, setMontoAlquiler] = useState('');
-  const [porcentaje, setPorcentaje] = useState('');
-  const [montoComision, setMontoComision] = useState('');
+  const [cuenta, setCuenta] = useState('');
   const [error, setError] = useState("");
   const [success, setSuccess] = useState('');
-
+  
+  const { toggleRecargar, setCambioFray, setCambioGeneral } = useContext(ComprobanteContext);
+  
   const fileInputRef = useRef(null);
 
   const resetFields = () => {
-    setTipo('');
-    setTipoComprobante('');
-    setMontoComision('');
+    setTipo('ingreso'); 
+    setTipoComprobante('factura');
+    setMonto('');
     setDescripcion('');
-    setMetodoPago('');
+    setMetodoPago('efectivo');
     setNroComprobante('');
     setImgComprobante('');
-    setMontoAlquiler('');
-    setPorcentaje('');
-
-    if(fileInputRef.current) {
+    setCuenta('');
+  
+    if (fileInputRef.current) {
       fileInputRef.current.value = '';
     }
   };
+  
 
     useEffect(() => {
     const idUsuario = localStorage.getItem("usuarioId");
@@ -54,13 +48,6 @@ import { formatearPesos } from '../../helpers/formatearPesos';
       setUsuario(idUsuario);
     }
     }, []);
-
-    useEffect(() => {
-      const comisionCalculada = comision(montoAlquiler, porcentaje);
-      console.log(comisionCalculada);
-      setMontoComision(comisionCalculada);
-    }, [montoAlquiler, porcentaje])
-    
 
     const handleImagenUpload = async (e) => {
     const file = e.target.files[0];
@@ -77,49 +64,49 @@ import { formatearPesos } from '../../helpers/formatearPesos';
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    
       const result = await manejarNuevaTransaccion({
         tipo,
         tipoComprobante,
-        monto: montoComision,
+        monto,
         descripcion,
         metodoPago,
         nroComprobante,
-        local,
+        local: locale,
         usuario,
-        porcentaje,
-        montoAlquiler,
         imagenComprobante,
         toggleRecargar,
+        cuenta,
         setError,
         setSuccess,
         resetFields,
         toast
       });
-      console.log(result);
 
       if (result) {
-        setCambioInmobiliaria(prev => prev + 1);
+        setCambio(prev => prev + 1);
         setCambioGeneral(prev => prev + 1);
-        enviarMensajeNuevoComprobante('astorInmobiliaria');
+        enviarMensajeNuevoComprobante(channelBroadCast);
       } 
 
   };
-    
+  
+  
 
   return (
     <form onSubmit={handleSubmit} className="flex flex-col gap-6 p-4 bg-blanco dark:bg-secondary-100 rounded-lg shadow-lg w-full">
   {/* Título */}
   <div className="text-center sm:text-left">
-    <Link to="" className="text-xl uppercase sm:text-2xl font-semibold text-primary">
-      Nuevo comprobante - Inmobiliaria
-    </Link>
+    <h1 className="text-xl sm:text-2xl uppercase font-semibold text-primary">
+      {titulo}
+    </h1>
   </div>
 
   <hr className="border-gray-400" />
 
   {/* Imagen del comprobante */}
   <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3">
-    <label className="sm:w-1/4 w-full text-sm sm:text-base font-medium dark:text-white">
+    <label className="sm:w-1/4 w-full text-sm sm:text-base font-medium">
       Imagen del comprobante <span className="text-red-700 font-bold">*</span>
     </label>
     <div className="flex-1 w-full">
@@ -127,27 +114,27 @@ import { formatearPesos } from '../../helpers/formatearPesos';
         <img
           src={imagenComprobante || fax}
           alt="Comprobante"
-          className="w-28 h-28 object-cover rounded-lg border border-primary shadow-sm"
+          className="w-28 h-28 object-cover rounded-lg border border-primaryshadow-sm"
         />
         <label
           htmlFor="avatar"
-          className="absolute border-2 border-primary bg-blanco dark:bg-secondary-100 p-2 rounded-full cursor-pointer left-24 -top-2 hover:text-primary transition"
+          className="absolute bg-blanco dark:bg-secondary-100 p-2 rounded-full cursor-pointer left-24 -top-2 hover:text-primary transition"
         >
           <RiEdit2Line />
         </label>
         <input
           type="file"
           className="hidden"
-          id="avatar"
           ref={fileInputRef}
-          onChange={(e) => handleImagenUpload(e)}
+          id="avatar"
+          onChange={handleImagenUpload}
         />
       </div>
       <p className="dark:text-gray-500 text-gray-700 text-sm">Formatos permitidos: PNG, JPG, JPEG.</p>
     </div>
   </div>
 
-  {/* Campos dinámicos */}
+  {/* Campos del formulario */}
   {[
     {
       label: "Tipo de comprobante",
@@ -157,7 +144,8 @@ import { formatearPesos } from '../../helpers/formatearPesos';
           value={tipoComprobante}
           onChange={(e) => setTipoComprobante(e.target.value)}
           required
-          className="w-full py-2 px-3 rounded-md bg-blanco dark:bg-secondary-900 text-black dark:text-white border-2 border-primary dark:border-none outline-none dark:focus:ring-2 dark:focus:ring-primary"
+          className="w-full py-2 px-3 rounded-md bg-blanco dark:bg-secondary-900 text-black dark:text-white border-2 border-primary dark:border-none outline-none dark:outline-none
+           dark:focus:ring-2 dark:focus:ring-primary "
         >
           <option value="factura">Factura</option>
           <option value="ticket">Ticket</option>
@@ -175,7 +163,7 @@ import { formatearPesos } from '../../helpers/formatearPesos';
           value={tipo}
           onChange={(e) => setTipo(e.target.value)}
           required
-          className="w-full py-2 px-3 rounded-md bg-blanco dark:bg-secondary-900 text-black dark:text-white border-2 border-primary dark:border-none outline-none dark:focus:ring-2 dark:focus:ring-primary"
+          className="w-full py-2 px-3 rounded-md bg-blanco dark:bg-secondary-900 text-black border-2 border-primary dark:border-none dark:text-white outline-none focus:ring-2 focus:ring-primary"
         >
           <option value="ingreso">Ingreso</option>
           <option value="egreso">Egreso</option>
@@ -192,7 +180,7 @@ import { formatearPesos } from '../../helpers/formatearPesos';
           onChange={(e) => setNroComprobante(e.target.value)}
           required
           placeholder="Ej: A-0001-12345678"
-          className="w-full py-2 px-3 rounded-md bg-blanco dark:bg-secondary-900 text-black dark:text-white border-2 border-primary dark:border-none outline-none dark:focus:ring-2 dark:focus:ring-primary"
+          className="w-full py-2 px-3 rounded-md bg-blanco dark:bg-secondary-900 text-black dark:text-white border-2 dark:border-none border-primary outline-none dark:focus:ring-2 dark:focus:ring-primary"
         />
       ),
     },
@@ -205,7 +193,7 @@ import { formatearPesos } from '../../helpers/formatearPesos';
           onChange={(e) => setDescripcion(e.target.value)}
           placeholder="Añade una breve descripción..."
           rows={2}
-          className="w-full py-2 px-3 rounded-md bg-blanco dark:bg-secondary-900 text-black dark:text-white border-2 border-primary dark:border-none outline-none dark:focus:ring-2 dark:focus:ring-primary"
+          className="w-full py-2 px-3 rounded-md bg-blanco dark:bg-secondary-900 text-black dark:text-white border-2 dark:border-none border-primary outline-none dark:focus:ring-2 dark:focus:ring-primary"
         />
       ),
     },
@@ -217,7 +205,7 @@ import { formatearPesos } from '../../helpers/formatearPesos';
           value={metodoPago}
           onChange={(e) => setMetodoPago(e.target.value)}
           required
-          className="w-full py-2 px-3 rounded-md bg-blanco dark:bg-secondary-900 text-black dark:text-white border-2 border-primary dark:border-none outline-none dark:focus:ring-2 dark:focus:ring-primary"
+          className="w-full py-2 px-3 rounded-md bg-blanco dark:bg-secondary-900 text-black dark:text-white border-2 dark:border-none border-primary outline-none dark:focus:ring-2 dark:focus:ring-primary"
         >
           <option value="efectivo">Efectivo</option>
           <option value="transferencia">Transferencia</option>
@@ -229,52 +217,46 @@ import { formatearPesos } from '../../helpers/formatearPesos';
       ),
     },
     {
-      label: "Importe del alquiler",
+      label: "Cuenta",
+      required: false,
+      element: (
+        <select
+          value={cuenta}
+          onChange={(e) => setCuenta(e.target.value)}
+          required
+          className="w-full py-2 px-3 rounded-md bg-blanco dark:bg-secondary-900 text-black dark:text-white border-2 dark:border-none border-primary outline-none dark:focus:ring-2 dark:focus:ring-primary"
+        >
+          <option value="">Seleccionar cuenta (opcional)</option>
+          <option value="Yanina">Yanina</option>
+          <option value="Sebastian">Sebastian</option>
+          
+        </select>
+      ),
+    },
+    {
+      label: "Monto final",
       required: true,
       element: (
         <input
           type="number"
-          value={montoAlquiler}
-          onChange={(e) => setMontoAlquiler(e.target.value)}
+          value={monto}
+          onChange={(e) => setMonto(e.target.value)}
           required
-          placeholder="Ej: $700.000"
-          className="w-full py-2 px-3 rounded-md bg-blanco dark:bg-secondary-900 text-black dark:text-white border-2 border-primary dark:border-none outline-none dark:focus:ring-2 dark:focus:ring-primary appearance-none"
+          placeholder="Ej: $250.000"
+          className="w-full py-2 px-3 rounded-md bg-blanco dark:bg-secondary-900 text-black dark:text-white border-2 dark:border-none border-primary outline-none dark:focus:ring-2 dark:focus:ring-primary"
         />
       ),
     },
-    {
-      label: "Porcentaje",
-      required: true,
-      element: (
-        <input
-          type="number"
-          value={porcentaje}
-          onChange={(e) => setPorcentaje(e.target.value)}
-          required
-          placeholder="Ej: 10"
-          className="w-full py-2 px-3 rounded-md bg-blanco dark:bg-secondary-900 text-black dark:text-white border-2 border-primary dark:border-none outline-none dark:focus:ring-2 dark:focus:ring-primary appearance-none"
-        />
-      ),
-    },
-    {
-      label: "Ganancia neta",
-      required: true,
-      element: (
-        <div className="w-full py-2 px-3 rounded-md bg-blanco dark:bg-secondary-900 text-black dark:text-white border-2 border-primary dark:border-none">
-          {formatearPesos(montoComision)}
-        </div>
-      ),
-    },
-  ].map(({ label, required, element }, index) => (
-    <div key={index} className="flex flex-col sm:flex-row items-start sm:items-center gap-3">
-      <label className="sm:w-1/4 w-full text-sm sm:text-base font-medium dark:text-white">
+  ].map(({ label, required, element }, i) => (
+    <div key={i} className="flex flex-col sm:flex-row items-start sm:items-center gap-3">
+      <label className="sm:w-1/4 w-full text-sm sm:text-base font-medium">
         {label} {required && <span className="text-red-700 font-bold">*</span>}
       </label>
       <div className="flex-1 w-full">{element}</div>
     </div>
   ))}
 
-  {/* Botón */}
+  {/* Botón de carga */}
   <div className="flex justify-center mt-4">
     <button
       type="submit"
@@ -285,5 +267,4 @@ import { formatearPesos } from '../../helpers/formatearPesos';
   </div>
 </form>
 
-
-  )};
+   )}

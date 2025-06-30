@@ -8,9 +8,8 @@ import { Link } from 'react-router-dom';
 import { cargarResumenBalances } from '../../controllers/transaccionController';
 import { useBroadcastChannel } from '../../helpers/useBroadcastChannelHelper';
 
-export const HomeFray = () => {
+export const GastosCompartidos = () => {
   
-// const { cambioFray } = useContext(ComprobanteContext);
 const [resumen, setResumen] = useState({});
 const [error, setError] = useState('');
 
@@ -31,15 +30,13 @@ const cargarDatos = useCallback(() => cargarResumenBalances(setResumen, setError
     <div>
       <div className="grid grid-cols-2 gap-3 mb-6 md:flex md:items-center md:justify-start">
   {[
-    { label: "SUBIR COMPROBANTES", to: "/home/comprobantes-fray" },
-    { label: "LISTAR COMPROBANTES", to: "/home/listado-fray" },
-    { label: "HISTORIAL MENSUAL", to: "/home/historial-fray" },
-    { label: "HISTORIAL SEMANAL", to: "/home/semanal-fray" },
+    { label: "CARGAR GASTO", to: "/home/nuevo-gasto" },
+    { label: "LISTAR GASTOS", to: "/home/listado-gastos" },
   ].map(({ label, to }, i) => (
     <Link
       key={i}
       to={to}
-      className="bg-primary text-black font-semibold uppercase text-[11px] md:text-[15px] text-center px-2 py-3 md:px-4 md:py-1 rounded-lg shadow-sm hover:shadow-md transition-all flex items-center justify-center h-[40px] md:h-[50px]"
+      className="bg-primary text-black font-semibold uppercase text-[13px] md:text-[15px] text-center px-2 py-3 md:px-4 md:py-1 rounded-lg shadow-sm hover:shadow-md transition-all flex items-center justify-center h-[40px] md:h-[50px]"
     >
       {label}
     </Link>
@@ -51,28 +48,28 @@ const cargarDatos = useCallback(() => cargarResumenBalances(setResumen, setError
         <CardTicket 
           ticket='ingreso'
           totalTickets={formatearPesos(resumen?.astorFray?.ingreso)}
-          text='Balance positivo'
-          link='/home/Comprobantes-Fray'
-          informacion='Agregar nuevo comprobante'
-          />
-        <CardTicket 
-          ticket='pendiente'
-          totalTickets='0'
-          text='Balance pendiente'
+          text='Astor Fray recibió 💸 de Galindez'
           link='/home/Comprobantes-Fray'
           informacion='Agregar nuevo comprobante'
           />
         <CardTicket 
           ticket='egreso'
-          totalTickets={formatearPesos(resumen?.astorFray?.egreso)}
-          text='Balance negativo'
+          totalTickets='0'
+          text='Astor Fray envío 💸 a Galindez'
           link='/home/Comprobantes-Fray'
           informacion='Agregar nuevo comprobante'
           />
         <CardTicket 
-          ticket='total'
+          ticket='ingreso'
+          totalTickets={formatearPesos(resumen?.astorFray?.egreso)}
+          text='Astor Galindez recibió 💸 de Fray'
+          link='/home/Comprobantes-Fray'
+          informacion='Agregar nuevo comprobante'
+          />
+        <CardTicket 
+          ticket='egreso'
           totalTickets={formatearPesos(resumen?.astorFray?.balance)}
-          text='Balance total'
+          text='Astor Galindez envío 💸 a Fray'
           link='/home/Comprobantes-Fray'
           informacion='Agregar nuevo comprobante'
           />

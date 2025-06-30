@@ -39,7 +39,7 @@ export const HistorialGeneral = () => {
   }, [recargar]);
 
   return (
-    <div className="p-6 mt-[70px] bg-gray-200 rounded-lg shadow-xl">
+    <div className="p-6 bg-blanco dark:bg-secondary-100 dark:text-white text-black rounded-lg shadow-xl">
       <h2 className="md:text-2xl text-xl font-bold text-center text-primary uppercase mb-6">
         Historial Financiero General
       </h2>
@@ -50,8 +50,8 @@ export const HistorialGeneral = () => {
 
       {/* Vista escritorio */}
       <div className="hidden md:block overflow-x-auto bg-white dark:bg-gray-900 shadow-xl rounded-xl">
-        <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700 text-black dark:text-white">
-          <thead className="bg-gray-100 dark:bg-gray-800">
+        <table className="min-w-full  text-black dark:text-white">
+          <thead className="bg-gray-200 dark:bg-secondary-900">
             <tr>
               <th className="px-6 py-3 text-left text-sm font-bold uppercase tracking-wider">
                 📅 Fecha
@@ -70,11 +70,11 @@ export const HistorialGeneral = () => {
               </th>
             </tr>
           </thead>
-          <tbody className="bg-white dark:bg-gray-900 divide-y divide-gray-200 dark:divide-gray-700">
+          <tbody className="bg-bclaro dark:bg-secondary-900">
             {historial.map((item) => (
               <tr
                 key={item._id}
-                className="hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
+                className="bg-blanco dark:bg-gray-900"
               >
                 <td className="px-6 py-4 flex items-center gap-2">
                   {item.mes}/{item.anio}

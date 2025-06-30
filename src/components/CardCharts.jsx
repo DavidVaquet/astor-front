@@ -104,30 +104,29 @@ import {
        
         <div className="flex">
             
-      <Card className="w-full bg-secondary-100">
+      <Card className="w-full bg-blanco dark:bg-secondary-100">
         <CardHeader
           floated={false}
           shadow={false}
           color="transparent"
-          className="flex flex-col bg-secondary-100 gap-4 rounded-none md:flex-row md:items-center"
+          className="flex flex-col bg-blanco dark:bg-secondary-100 gap-4 rounded-none md:flex-row md:items-center"
         >
-          <div className="w-max rounded-lg bg-gray-900 p-5 text-white">
+          <div className="w-max rounded-lg  bg-secondary-900 p-5 text-white">
             <IoBarChartSharp className="h-6 w-6" />
           </div>
           <div>
-            <Typography variant="h6" color="white">
+            <Typography variant="h6" className="text-black dark:text-white">
               Linea del tiempo
             </Typography>
             <Typography
               variant="small"
-              color="white"
-              className="max-w-sm font-normal"
+              className="max-w-sm font-normal text-black dark:text-white"
             >
               Visualice sus datos de una manera sencilla utilizando la linea del tiempo.
             </Typography>
           </div>
         </CardHeader>
-        <CardBody className="px-2 pb-0 bg-secondary-100">
+        <CardBody className="px-2 pb-0 bg-blanco dark:bg-secondary-100">
           <Chart {...chartConfig} />
         </CardBody>
       </Card>

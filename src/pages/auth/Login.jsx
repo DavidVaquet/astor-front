@@ -31,11 +31,11 @@ export const Login = () => {
   }
 
   return (
-    <div className='min-h-screen flex bg-secondary-900 p-4 items-center justify-center'>
+    <div className='min-h-screen flex dark:bg-secondary-900 bg-bclaro p-4 items-center justify-center'>
 
-    <div className='bg-secondary-100 p-12 rounded-xl w-auto lg:w-[500px]'>
+    <div className='dark:bg-secondary-100 bg-blanco shadow-2xl border-2 border-primary dark:border-none dark:shadow-none p-12 rounded-xl w-auto lg:w-[500px]'>
       <img src={logo} alt="Logo-Astor" className='w-36 h-36 mx-auto mb-2' />
-      <h1 className='text-2xl text-center mb-8 font-bold tracking-[2px] text-white'>INICIAR <span className='text-yellow-400'>SESION</span></h1>
+      <h1 className='text-2xl text-center mb-8 font-bold tracking-[2px] dark:text-white text-black'>INICIAR <span className='text-primary'>SESIÓN</span></h1>
       
     {error && (
     <div className="bg-red-500 text-white text-sm font-semibold px-4 py-2 mb-4 rounded-md text-center">
@@ -50,7 +50,7 @@ export const Login = () => {
           type="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          className='py-3 pl-8 pr-4 bg-white w-full outline-none rounded-lg focus:border-2 focus:border-yellow-400'
+          className='py-3 pl-8 pr-4 bg-bclaro border-2 border-primary dark:border-none  w-full outline-none rounded-lg dark:focus:border-2 dark:focus:border-primary'
           placeholder='Correo electronico'
           required/>
         </div>
@@ -60,7 +60,7 @@ export const Login = () => {
           type={showPassword ? 'text' : 'password'}
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          className='py-3 pl-8 pr-4 bg-white w-full outline-none rounded-lg focus:border-2 focus:border-yellow-400'
+          className='py-3 pl-8 pr-4 bg-bclaro border-2 border-primary dark:border-none w-full outline-none rounded-lg dark:focus:border-2 dark:focus:border-primary'
           placeholder='Contraseña'
           required/>
           {
@@ -75,13 +75,13 @@ export const Login = () => {
         <div>
           <button 
           type='submit'
-          className='bg-yellow-400 w-full py-3 px-4 rounded-xl text-sm font-bold uppercase'>
+          className='bg-primary w-full py-3 px-4 rounded-xl text-sm font-bold uppercase'>
           Ingresar
           </button>
         </div>
       </form>
       <div className='flex flex-col items-center gap-4'>
-          <span className='text-white hover:text-yellow-400'><Link to='/recuperar-contraseña'>¿Olvidaste tu contraseña?</Link></span>
+          <span className='dark:text-white text-black font-semibold hover:text-primary'><Link to='/recuperar-contraseña'>¿Olvidaste tu contraseña?</Link></span>
       </div>
     </div>
 

@@ -91,9 +91,9 @@ const NuevoUsuario = () => {
     return (
         <div className='min-h-screen flex items-center justify-center  p-4'>
             {/* Card Container */}
-            <div className='bg-secondary-100 p-10 rounded-xl mb-44 shadow-2xl w-full max-w-3xl'> {/* Aumentado max-width */}
-                <img src={logo} alt="Logo-Astor" className='w-32 h-32 mx-auto mb-4 drop-shadow-md' /> {/* Ajustado tamaño y sombra */}
-                <h1 className='text-3xl text-center mb-8 font-bold tracking-wide text-white uppercase'>
+            <div className='dark:bg-secondary-100 bg-blanco  p-10 rounded-xl mb-44 shadow-2xl w-full max-w-3xl'>
+                <img src={logo} alt="Logo-Astor" className='w-32 h-32 mx-auto mb-4 drop-shadow-md' /> 
+                <h1 className='text-3xl text-center mb-8 font-bold tracking-wide text-black dark:text-white uppercase'>
                     Crear <span className='text-primary'>Nuevo Usuario</span>
                 </h1>
 
@@ -108,7 +108,7 @@ const NuevoUsuario = () => {
                                 type="text"
                                 value={nombre}
                                 onChange={(e) => setNombre(e.target.value)}
-                                className='py-3 pl-10 pr-4 bg-secondary-900 w-full text-gray-300 outline-none rounded-lg focus:border focus:border-primary transition-colors'
+                                className='py-3 pl-10 pr-4 dark:bg-secondary-900 bg-blanco w-full text-black dark:text-gray-300 outline-none rounded-lg dark:focus:border dark:focus:border-primary dark:border-none border-2 border-primary transition-colors'
                                 placeholder='Nombre Completo'
                                 required
                                 aria-label="Nombre Completo"
@@ -122,7 +122,7 @@ const NuevoUsuario = () => {
                                 type="email"
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
-                                className='py-3 pl-10 pr-4 bg-secondary-900 w-full text-gray-300 outline-none rounded-lg focus:border focus:border-primary transition-colors'
+                                className='py-3 pl-10 pr-4 dark:bg-secondary-900 bg-blanco w-full text-black dark:text-gray-300 outline-none rounded-lg dark:focus:border dark:focus:border-primary dark:border-none border-2 border-primary transition-colors'
                                 placeholder='Correo electrónico'
                                 required
                                 aria-label="Correo electrónico"
@@ -136,7 +136,7 @@ const NuevoUsuario = () => {
                                 type={showPassword ? 'text' : 'password'}
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
-                                className='py-3 pl-10 pr-10 bg-secondary-900 w-full text-gray-300 outline-none rounded-lg focus:border focus:border-primary transition-colors'
+                                className='py-3 pl-10 pr-10 dark:bg-secondary-900 bg-blanco w-full text-black dark:text-gray-300 outline-none rounded-lg dark:focus:border dark:focus:border-primary border-primary border-2 transition-colors'
                                 placeholder='Contraseña (mínimo 6 caracteres)' // Añadida sugerencia
                                 required
                                 minLength={6} // Asegura mínimo 6 caracteres en HTML
@@ -155,13 +155,13 @@ const NuevoUsuario = () => {
 
                     {/* Roles Section - Spanning full width */}
                     <div className="mb-8 md:col-span-2">
-                        <label className="block mb-4 font-medium text-white text-lg flex items-center gap-2"> {/* Etiqueta más prominente */}
+                        <label className="block mb-4 font-medium dark:text-white text-black text-base flex items-center gap-2"> {/* Etiqueta más prominente */}
                             <RiShieldUserFill className="text-primary" /> Seleccionar Roles:
                         </label>
                         {/* Grid Layout for Checkboxes */}
                         <div className="grid grid-cols-2 sm:grid-cols-3 gap-x-6 gap-y-3">
                             {roleOptions.map((role) => (
-                                <label key={role.value} className="flex items-center gap-2 text-gray-300 hover:text-white cursor-pointer transition-colors text-sm">
+                                <label key={role.value} className="flex items-center gap-2 text-gray-800 hover:text-primary dark:text-gray-300 dark:hover:text-primary cursor-pointer transition-colors text-sm">
                                     <input
                                         type="checkbox"
                                         value={role.value}

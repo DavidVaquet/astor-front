@@ -11,16 +11,20 @@ export const manejarNuevaTransaccion = async({
     local,
     descripcion,
     metodoPago,
+    cuenta,
+    montoAlquiler,
+    porcentaje,
     setError,
     setSuccess,
     resetFields,
     usuario,
     toast,
-    toggleRecargar}) => {
+    toggleRecargar,
+    }) => {
         
     try {
 
-    const data = await nuevoComprobante(tipo,monto,tipoComprobante,nroComprobante,imagenComprobante,local,descripcion,metodoPago,usuario);
+    const data = await nuevoComprobante(tipo,monto,tipoComprobante,nroComprobante,imagenComprobante,local,descripcion,metodoPago,usuario, cuenta, montoAlquiler, porcentaje);
 
     if (setSuccess) setSuccess('Comprobante cargado correctamente');
     if (setError) setError('');

@@ -26,7 +26,7 @@ export const Home = () => {
   return (
     <div>
       <div className='flex items-center mb-5'>
-        <h1 className='text-3xl text-primary text-center uppercase'>Estadísticas Generales Astor</h1>
+        <h1 className='text-3xl text-primary text-center uppercase font-bold'>Estadísticas Generales Astor</h1>
       </div>
 
       <div className='grid grid-cols-1 md:grid-cols-2 items-center lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-10'>
@@ -47,7 +47,7 @@ export const Home = () => {
           ticket='egreso'
           totalTickets={formatearPesos(resumen?.general?.egreso)}
           text='Balance negativo'
-          informacion='Ver comprobantes Astor Galindez'
+          informacion='Ver comprobantes Galindez'
           link='/home/Listado-Galindez'
         />
         <CardTicket

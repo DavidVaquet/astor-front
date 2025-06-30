@@ -2,6 +2,7 @@
 import withMT from "@material-tailwind/react/utils/withMT";
 
 export default withMT({
+  darkMode: 'class',
   content: [
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
@@ -14,8 +15,11 @@ export default withMT({
         secondary: {
           100: '#1E1F25',
           900: '#151515',
-        }
-      }
+          200: '#222222'
+        },
+        blanco: '#fcfcfc',
+        bclaro: '#f6f6f6'
+      },
     },
   },
   plugins: [

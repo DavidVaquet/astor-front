@@ -18,11 +18,11 @@ export const RecoveryPassword = () => {
 
   return (
 
-      <div className='min-h-screen flex bg-secondary-900 p-4 items-center justify-center'>
+      <div className='min-h-screen flex dark:bg-secondary-900 bg-bclaro p-4 items-center justify-center'>
 
-    <div className='bg-secondary-100 p-12 rounded-xl w-auto lg:w-[500px]'>
+    <div className='dark:bg-secondary-100 bg-blanco shadow-lg border-2 border-primary dark:border-none p-12 rounded-xl w-auto lg:w-[500px]'>
       <img src={logo} alt="Logo-Astor" className='w-36 h-36 mx-auto mb-2' />
-      <h1 className='text-2xl text-center mb-8 font-bold tracking-[2px] text-white uppercase'>RECUPERAR <span className='text-yellow-400'>CONTRASEñA</span></h1>
+      <h1 className='text-2xl text-center mb-8 font-bold tracking-[2px] dark:text-white text-black uppercase'>RECUPERAR <span className='text-primary'>CONTRASEñA</span></h1>
       <form
       onSubmit={handleSubmit} 
       className='mb-6'
@@ -33,20 +33,20 @@ export const RecoveryPassword = () => {
           type="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          className='py-3 pl-8 pr-4 bg-white w-full outline-none rounded-lg focus:border-2 focus:border-yellow-400'
+          className='py-3 pl-8 pr-4 bg-bclaro border-2 border-primary dark:border-none w-full outline-none rounded-lg dark:focus:border-2 dark:focus:border-primary'
           placeholder='Correo electronico'/>
         </div>
         
         <div>
           <button 
           type='submit'
-          className='bg-yellow-400 w-full py-3 px-4 rounded-xl text-sm font-bold uppercase'>
+          className='bg-primary w-full py-3 px-4 rounded-xl text-sm font-bold uppercase'>
           Enviar instrucciones
           </button>
         </div>
       </form>
       <div className='flex flex-col items-center gap-4'>
-          <span className='text-white'><Link to='/login'>¿Ya tienes una cuenta? <span className='text-yellow-400'>Ingresa</span></Link></span>
+          <span className='dark:text-white text-black'><Link to='/login'>¿Ya tienes una cuenta? <span className='text-primary'>Ingresa</span></Link></span>
       </div>
     </div>
       </div>

@@ -28,31 +28,22 @@ export const HomeGalindez = () => {
 
   return (
     <div>
-      <div className='flex items-center mb-5 gap-4'>
-        <div className='bg-primary text-center md:text-start px-1 py-1 md:px-3 md:py-2 rounded-lg'>
-          <Link
-            className='text-[14px] md:text-[18px] text-black font-bold uppercase'
-            to='/home/Comprobantes-Galindez'>
-            SUBIR COMPROBANTES
-          </Link>
-        </div>
-
-        <div className='bg-primary text-center md:text-start px-1 py-1 md:px-3 md:py-2 rounded-lg'>
-          <Link
-            className='text-[14px] md:text-[18px] text-black font-bold uppercase'
-            to='/home/Listado-Galindez'>
-            LISTAR COMPROBANTES
-          </Link>
-        </div>
-
-        <div className='bg-primary text-center md:text-start px-1 py-1 md:px-3 md:py-2 rounded-lg'>
-          <Link
-            className='text-[14px] md:text-[18px] text-black font-bold uppercase'
-            to='/home/Historial-Galindez'>
-            HISTORIAL FINANCIERO
-          </Link>
-        </div>
-      </div>
+      <div className="grid grid-cols-2 gap-3 mb-6 md:flex md:items-center md:justify-start">
+  {[
+    { label: "SUBIR COMPROBANTES", to: "/home/comprobantes-galindez" },
+    { label: "LISTAR COMPROBANTES", to: "/home/listado-galindez" },
+    { label: "HISTORIAL MENSUAL", to: "/home/historial-galindez" },
+    { label: "HISTORIAL SEMANAL", to: "/home/semanal-galindez" },
+  ].map(({ label, to }, i) => (
+    <Link
+      key={i}
+      to={to}
+      className="bg-primary text-black font-semibold uppercase text-[11px] md:text-[15px] text-center px-2 py-3 md:px-4 md:py-1 rounded-lg shadow-sm hover:shadow-md transition-all flex items-center justify-center h-[40px] md:h-[50px]"
+    >
+      {label}
+    </Link>
+  ))}
+</div>
 
       <div className='grid grid-cols-1 md:grid-cols-2 items-center lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-10'>
         <CardTicket 

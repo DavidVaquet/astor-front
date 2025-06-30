@@ -37,24 +37,24 @@ const chartConfig = {
  
 export default function Example() {
   return (
-    <Card className="bg-secondary-100">
+    <Card className="bg-blanco dark:bg-secondary-100">
       <CardHeader
         floated={false}
         shadow={false}
         color="transparent"
         className="flex flex-col gap-4 rounded-none md:flex-row md:items-center"
       >
-        <div className="w-max rounded-lg bg-gray-900 p-5 text-white">
+        <div className="w-max rounded-lg bg-secondary-900 p-5 text-white">
           <Square3Stack3DIcon className="h-6 w-6" />
         </div>
         <div>
-          <Typography variant="h6" color="white">
+          <Typography variant="h6" className="text-black dark:text-white">
             Pie Chart
           </Typography>
           <Typography
             variant="small"
             color="gray"
-            className="max-w-sm font-normal text-white"
+            className="max-w-sm font-normal text-black dark:text-white"
           >
             Visualice la cantidad de comprobantes en un circular Chart.
           </Typography>

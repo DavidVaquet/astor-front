@@ -19,7 +19,7 @@ import { Error404 } from './pages/Error404';
 import NuevoUsuario from './pages/admin/NuevoUsuario';
 import { GestionUsuarios } from './pages/admin/GestionUsuarios';
 // Seccion de Comprobantes
-import { ComprobantesFray} from './pages/admin/ComprobantesAstorFray';
+import { ComprobantesAstorFray} from './pages/admin/ComprobantesAstorFray';
 import { ComprobantesGalindez } from './pages/admin/ComprobantesGalindez';
 import { ComprobantesInmobiliaria } from './pages/admin/ComprobantesInmobiliaria';
 // Historiales Financieros 
@@ -30,6 +30,13 @@ import { HistorialGeneral} from './pages/admin/HistorialGeneral';
 // React Toast
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { GastosCompartidos } from './pages/admin/GastosCompartidos';
+import { SubirGastos } from './pages/admin/SubirGastos';
+import { ListarTransferencias } from './pages/admin/ListarTransferencias';
+import { VistaInmobiliaria } from './pages/admin/VistaInmobiliaria';
+import { SemanalGalindez } from './pages/admin/SemanalGalindez';
+import { SemanalFray } from './pages/admin/SemanalFray';
+import { SemanalGeneral } from './pages/admin/SemanalGeneral';
 
 function App() {
   
@@ -48,29 +55,36 @@ function App() {
 
     <Route path='/home' element={<LayoutAdmin/>}>
       <Route index element={<Home/>} />
-      <Route path='Historial-General' element={<HistorialGeneral/>} />
+      <Route path='historial-general' element={<HistorialGeneral/>} />
+      <Route path='gastos-compartidos' element={<GastosCompartidos/>} />
+      <Route path='nuevo-gasto' element={<SubirGastos/>} />
+      <Route path='listado-gastos' element={<ListarTransferencias/>} />
+      <Route path='semanal-general' element={<SemanalGeneral/>} />
       {/* Rutas protegidas Astor Fray  */}
       <Route element={<RutaProtegida rolesPermitidos={['ENCARGADOFRAY_ROLE', 'ADMIN_ROLE']}/>} >
-      <Route path='AstorFray' element={<HomeFray/>} />
-      <Route path='Comprobantes-Fray' element={<AstorFray/>} />
-      <Route path='Listado-Fray' element={<ComprobantesFray/>} />
-      <Route path='Historial-Fray' element={<HistorialFinancieroFray/>} />
+      <Route path='astor-fray' element={<HomeFray/>} />
+      <Route path='comprobantes-fray' element={<AstorFray/>} />
+      <Route path='listado-fray' element={<ComprobantesAstorFray/>} />
+      <Route path='historial-fray' element={<HistorialFinancieroFray/>} />
+      <Route path='semanal-fray' element={<SemanalFray/>} />
       </Route>
 
       {/* Rutas protegidas Astor Galindez */}
       <Route element={<RutaProtegida rolesPermitidos={['ENCARGADOGALINDEZ_ROLE', 'ADMIN_ROLE']}/>}>
-      <Route path='AstorGalindez' element={<HomeGalindez/>} />
-      <Route path='Comprobantes-Galindez' element={<AstorGalindez/>} />
-      <Route path='Listado-Galindez' element={<ComprobantesGalindez/>} />
-      <Route path='Historial-Galindez' element={<HistorialFinancieroGalindez/>} />
+      <Route path='astor-galindez' element={<HomeGalindez/>} />
+      <Route path='comprobantes-galindez' element={<AstorGalindez/>} />
+      <Route path='listado-galindez' element={<ComprobantesGalindez/>} />
+      <Route path='historial-galindez' element={<HistorialFinancieroGalindez/>} />
+      <Route path='semanal-galindez' element={<SemanalGalindez/>} />
       </Route>
 
       {/* Rutas protegidas Inmobiliaria Catamarca Inversiones */}
       <Route element={<RutaProtegida rolesPermitidos={['ENCARGADOINMOBILIARIA_ROLE', 'ADMIN_ROLE']}/>}>
-      <Route path='Inmobiliaria' element={<HomeInmobiliaria/>} />
-      <Route path='Comprobantes-Inmobiliaria' element={<Inmobiliaria/>} />
-      <Route path='Listado-Inmobiliaria' element={<ComprobantesInmobiliaria/>} />
-      <Route path='Historial-Inmobiliaria' element={<HistorialFinancieroInmobiliaria/>} />
+      <Route path='inmobiliaria' element={<HomeInmobiliaria/>} />
+      <Route path='comprobantes-inmobiliaria' element={<Inmobiliaria/>} />
+      <Route path='listado-inmobiliaria' element={<ComprobantesInmobiliaria/>} />
+      <Route path='historial-inmobiliaria' element={<HistorialFinancieroInmobiliaria/>} />
+      <Route path='semanal-inmobiliaria' element={<VistaInmobiliaria/>} />
       </Route>
       
       {/* Rutas protegidas creacion de usuario */}

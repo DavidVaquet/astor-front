@@ -19,7 +19,7 @@ switch(ticket) {
         textColor = 'text-green-500';
         break;
         case 'egreso':
-            status = 'bg-reed-500/10 text-red-500';
+            status = 'bg-red-500/10 text-red-500';
             textColor = 'text-red-500';
             break;
             case 'pendiente':
@@ -33,7 +33,7 @@ switch(ticket) {
                 } 
 
   return (
-    <div className='bg-secondary-100 p-4 rounded-2xl'>
+    <div className='bg-blanco dark:bg-secondary-100 shadow-lg rounded-2xl p-4'>
       
       <div className='flex items-center justify-between mb-4'>
         <div>
@@ -81,7 +81,7 @@ switch(ticket) {
       </div>
       <div className='py-2'>
         <div>
-        <h1 className='text-4xl text-white font-bold mb-4'>{totalTickets}</h1>
+        <h1 className='text-2xl text-black dark:text-white font-normal mb-4'>{totalTickets}</h1>
         <p className={textColor}>{text}</p>
         </div>
         <div>
