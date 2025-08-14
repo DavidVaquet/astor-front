@@ -62,9 +62,47 @@ import { enviarMensajeNuevoComprobante } from '../helpers/useBroadcastChannelHel
     }
   };
 
+  const validarFormulario = () => {
+    
+    if (!imagenComprobante){
+        toast.error('Debes subir una imagen.');
+        return false;
+       };
+
+    if (!tipo){
+        toast.error('Debes seleccionar un tipo de transacción.');
+        return false;
+       };
+
+    if (!tipoComprobante){
+        toast.error('Debes seleccionar un tipo de comprobante.');
+        return false;
+       };
+
+    if (!nroComprobante){
+        toast.error('Debes especificar un nro de comprobante.');
+        return false;
+       };
+
+    if (!metodoPago){
+        toast.error('Debes seleccionar un método de pago.');
+        return false;
+       };
+
+    if (!monto){
+        toast.error('Debes especificar el monto.');
+        return false;
+       };
+
+       return true;
+    
+  }
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
+       if (!validarFormulario()) return;
+
       const result = await manejarNuevaTransaccion({
         tipo,
         tipoComprobante,
@@ -77,17 +115,18 @@ import { enviarMensajeNuevoComprobante } from '../helpers/useBroadcastChannelHel
         imagenComprobante,
         toggleRecargar,
         cuenta,
-        setError,
-        setSuccess,
         resetFields,
         toast
       });
 
       if (result) {
+        toast.success('Comprobante cargado correctamente')
         setCambio(prev => prev + 1);
         setCambioGeneral(prev => prev + 1);
         enviarMensajeNuevoComprobante(channelBroadCast);
-      } 
+      } else {
+        toast.error('Ocurrio un error al cargar el comprobante')
+      }
 
   };
   
@@ -127,6 +166,7 @@ import { enviarMensajeNuevoComprobante } from '../helpers/useBroadcastChannelHel
           className="hidden"
           ref={fileInputRef}
           id="avatar"
+          required
           onChange={handleImagenUpload}
         />
       </div>

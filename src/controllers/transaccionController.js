@@ -14,8 +14,6 @@ export const manejarNuevaTransaccion = async({
     cuenta,
     montoAlquiler,
     porcentaje,
-    setError,
-    setSuccess,
     resetFields,
     usuario,
     toast,
@@ -26,8 +24,7 @@ export const manejarNuevaTransaccion = async({
 
     const data = await nuevoComprobante(tipo,monto,tipoComprobante,nroComprobante,imagenComprobante,local,descripcion,metodoPago,usuario, cuenta, montoAlquiler, porcentaje);
 
-    if (setSuccess) setSuccess('Comprobante cargado correctamente');
-    if (setError) setError('');
+    
     if (resetFields) resetFields();
     if (toggleRecargar) toggleRecargar();
 
@@ -35,9 +32,7 @@ export const manejarNuevaTransaccion = async({
     return data;
 
     } catch (error) {
-
-    if (setError) setError(error.message);
-    if (setSuccess) setSuccess("");
+      
     toast.error("Ocurrió un error inesperado.", { position: "top-center",autoClose: 3000,});
     console.error("Error al subir el comprobante:", error.message);}
     

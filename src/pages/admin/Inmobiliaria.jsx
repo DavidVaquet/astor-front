@@ -75,8 +75,43 @@ import { formatearPesos } from '../../helpers/formatearPesos';
     }
   };
 
+  const validarFormulario = () => {
+    
+    
+    if (!tipo){
+        toast.error('Debes seleccionar un tipo de transacción.');
+        return false;
+       };
+
+    if (!tipoComprobante){
+        toast.error('Debes seleccionar un tipo de comprobante.');
+        return false;
+       };
+
+    if (!nroComprobante){
+        toast.error('Debes especificar un nro de comprobante.');
+        return false;
+       };
+
+    if (!metodoPago){
+        toast.error('Debes seleccionar un método de pago.');
+        return false;
+       };
+
+    if (!montoComision){
+        toast.error('Debes especificar el monto.');
+        return false;
+       };
+
+       return true;
+    
+  }
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+      if (!validarFormulario()) return;
+
       const result = await manejarNuevaTransaccion({
         tipo,
         tipoComprobante,
@@ -90,18 +125,18 @@ import { formatearPesos } from '../../helpers/formatearPesos';
         montoAlquiler,
         imagenComprobante,
         toggleRecargar,
-        setError,
-        setSuccess,
         resetFields,
         toast
       });
-      console.log(result);
 
       if (result) {
+        toast.success('Comprobante cargado correctamente.')
         setCambioInmobiliaria(prev => prev + 1);
         setCambioGeneral(prev => prev + 1);
         enviarMensajeNuevoComprobante('astorInmobiliaria');
-      } 
+      } else {
+        toast.error('Ocurrio un error al cargar el comprobante');
+      }
 
   };
     
@@ -120,7 +155,7 @@ import { formatearPesos } from '../../helpers/formatearPesos';
   {/* Imagen del comprobante */}
   <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3">
     <label className="sm:w-1/4 w-full text-sm sm:text-base font-medium dark:text-white">
-      Imagen del comprobante <span className="text-red-700 font-bold">*</span>
+      Imagen del comprobante (opcional)
     </label>
     <div className="flex-1 w-full">
       <div className="relative mb-1">
