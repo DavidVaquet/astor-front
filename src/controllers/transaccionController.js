@@ -16,8 +16,7 @@ export const manejarNuevaTransaccion = async({
     porcentaje,
     resetFields,
     usuario,
-    toast,
-    toggleRecargar,
+    toggleRecargar
     }) => {
         
     try {
@@ -28,12 +27,9 @@ export const manejarNuevaTransaccion = async({
     if (resetFields) resetFields();
     if (toggleRecargar) toggleRecargar();
 
-    toast.success("Comprobante cargado correctamente", { position: "top-center",autoClose: 3000,});
     return data;
 
     } catch (error) {
-      
-    toast.error("Ocurrió un error inesperado.", { position: "top-center",autoClose: 3000,});
     console.error("Error al subir el comprobante:", error.message);}
     
     };
