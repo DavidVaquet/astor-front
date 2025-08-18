@@ -114,7 +114,7 @@ export const ComprobantesInmobiliaria = () => {
               <th className="px-6 py-4 text-left">Descripción</th>
               <th className="px-6 py-4 text-center">Monto</th>
               <th className="px-6 py-4 text-left">Usuario</th>
-              <th className="px-6 py-4 text-left">Cuenta</th>
+              <th className="px-7 py-4 text-left">Cuenta</th>
               <th className="px-6 py-4 text-center">Acciones</th>
             </tr>
           </thead>
@@ -165,7 +165,7 @@ export const ComprobantesInmobiliaria = () => {
                   )}
                 </td>
                 <td className="px-6 py-4 capitalize">{comp.usuario?.nombre || "Sin usuario"}</td>
-                <td className="px-6 py-4 capitalize">{comp.cuenta || "—"}</td>
+                <td className="px-7 py-4 capitalize">{comp.cuenta || "—"}</td>
                 <td className="px-6 py-4 text-center">
                   <div className="flex justify-center items-center gap-3">
                     <FaImage className="text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 cursor-pointer" onClick={() => abrirImagen(comp.imagenComprobante)} />
