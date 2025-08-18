@@ -12,6 +12,7 @@ if (tema === "dark") {
 }
 
 const token = localStorage.getItem('token');
+
 if (!token && window.location.pathname !== '/login') {
   window.location.href = '/login';
 } else {

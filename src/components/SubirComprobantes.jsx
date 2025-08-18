@@ -115,8 +115,7 @@ import { enviarMensajeNuevoComprobante } from '../helpers/useBroadcastChannelHel
         imagenComprobante,
         toggleRecargar,
         cuenta,
-        resetFields,
-        toast
+        resetFields
       });
 
       if (result) {
@@ -133,7 +132,7 @@ import { enviarMensajeNuevoComprobante } from '../helpers/useBroadcastChannelHel
   
 
   return (
-    <form onSubmit={handleSubmit} className="flex flex-col gap-6 p-4 bg-blanco dark:bg-secondary-100 rounded-lg shadow-lg w-full">
+    <form onSubmit={handleSubmit} noValidate className="flex flex-col gap-6 p-4 bg-blanco dark:bg-secondary-100 rounded-lg shadow-lg w-full">
   {/* Título */}
   <div className="text-center sm:text-left">
     <h1 className="text-xl sm:text-2xl uppercase font-semibold text-primary">

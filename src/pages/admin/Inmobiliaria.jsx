@@ -120,8 +120,7 @@ export const Inmobiliaria = () => {
       imagenComprobante,
       toggleRecargar,
       cuenta,
-      resetFields,
-      toast,
+      resetFields
     });
 
     if (result) {
@@ -136,6 +135,7 @@ export const Inmobiliaria = () => {
 
   return (
     <form
+      noValidate
       onSubmit={handleSubmit}
       className="flex flex-col gap-6 p-4 bg-blanco dark:bg-secondary-100 rounded-lg shadow-lg w-full"
     >
