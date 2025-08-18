@@ -149,7 +149,7 @@ export const ListarComprobantes = ({ localProp, setCambio }) => {
               <th className="px-6 py-4 text-left">Descripción</th>
               <th className="px-6 py-4 text-center">Monto</th>
               <th className="px-6 py-4 text-left">Usuario</th>
-              <th className="px-6 py-4 text-left">Cuenta</th>
+              <th className="px-7 py-4 text-left">Cuenta</th>
               <th className="px-6 py-4 text-center">Acciones</th>
             </tr>
           </thead>
@@ -202,7 +202,7 @@ export const ListarComprobantes = ({ localProp, setCambio }) => {
                   )}
                 </td>
                 <td className="px-6 py-4 capitalize">{comp.usuario?.nombre || "Sin usuario"}</td>
-                <td className="px-6 py-4 capitalize hidden lg:table-cell">{comp.cuenta || "—"}</td>
+                <td className="px-7 py-4 capitalize hidden lg:table-cell">{comp.cuenta || "—"}</td>
                 <td className="px-6 py-4 text-center">
                   <div className="flex justify-center items-center gap-3">
                     <FaImage
