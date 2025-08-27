@@ -260,8 +260,8 @@ import { enviarMensajeNuevoComprobante } from '../helpers/useBroadcastChannelHel
       required: false,
       element: (
         <select
-          value={cuenta}
-          onChange={(e) => setCuenta(e.target.value)}
+          value={cuenta ?? ""}
+          onChange={(e) => setCuenta(e.target.value === "" ? null : e.target.value)}
           className="w-full py-2 px-3 rounded-md bg-blanco dark:bg-secondary-900 text-black dark:text-white border-2 dark:border-none border-primary outline-none dark:focus:ring-2 dark:focus:ring-primary"
         >
           <option value="">Seleccionar cuenta bancaria (opcional)</option>
