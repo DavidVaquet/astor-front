@@ -14,11 +14,14 @@ export const nuevoComprobante = async (tipo, monto, tipoComprobante, nroComproba
         metodoPago,
         descripcion,
         usuario,
-        cuenta,
         montoAlquiler,
         porcentaje
     };
 
+    if (cuenta !=null){
+      body.cuenta = cuenta;
+    };
+    
     try {
 
         if (!token) {

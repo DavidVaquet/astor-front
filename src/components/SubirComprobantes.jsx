@@ -103,7 +103,7 @@ import { enviarMensajeNuevoComprobante } from '../helpers/useBroadcastChannelHel
 
        if (!validarFormulario()) return;
 
-      const result = await manejarNuevaTransaccion({
+       const base = {
         tipo,
         tipoComprobante,
         monto,
@@ -113,8 +113,15 @@ import { enviarMensajeNuevoComprobante } from '../helpers/useBroadcastChannelHel
         local: locale,
         usuario,
         imagenComprobante,
+       }
+
+       if (cuenta != null) {
+        base.cuenta = cuenta;
+       }
+       
+      const result = await manejarNuevaTransaccion({
+        ...base,
         toggleRecargar,
-        cuenta,
         resetFields
       });
 
