@@ -4,7 +4,7 @@ import { ComprobanteContext } from "../../context/ComprobanteContext";
 import { uploadImgCloudinary } from "../../services/uploadService";
 import { enviarMensajeNuevoComprobante } from "../../helpers/useBroadcastChannelHelper";
 import { comision } from "../../helpers/comision";
-import fax from "../../assets/comprobante.jpg";
+import fax from '../assets/comprobante.jpgeg';
 import { RiEdit2Line } from "react-icons/ri";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";

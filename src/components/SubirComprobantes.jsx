@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { manejarNuevaTransaccion } from '../controllers/transaccionController';
 import { useContext } from 'react';
 import { ComprobanteContext } from '../context/ComprobanteContext';
-import fax from '../assets/comprobante.jpg';
+import fax from '../assets/comprobante.jpgeg';
 import { RiEdit2Line } from "react-icons/ri";
 import { uploadImgCloudinary } from '../services/uploadService';
 import { toast } from 'react-toastify';
