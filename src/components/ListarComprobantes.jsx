@@ -202,7 +202,22 @@ export const ListarComprobantes = ({ localProp, setCambio }) => {
                   )}
                 </td>
                 <td className="px-6 py-4 capitalize">{comp.usuario?.nombre || "Sin usuario"}</td>
-                <td className="px-7 py-4 capitalize hidden lg:table-cell">{comp.cuenta || "—"}</td>
+                <td className="px-7 py-4 capitalize hidden lg:table-cell">
+                  {editandoId === comp._id ? (
+                    <select
+                     className="w-auto  py-1 text-sm text-black dark:text-white dark:bg-gray-600 border border-yellow-500 dark:border-yellow-400 rounded-md"
+                      value={valoresEditados.cuenta}
+                      onChange={(e) => setValoresEditados({...valoresEditados, cuenta: e.target.value})}
+                      >
+                        <option value="BNA+">Banco Nación</option>
+                        <option value="Mercadopago">Mercadopago</option>
+                        <option value="Naranja X">Naranja X</option>
+                    </select>
+                  ) : (
+                   comp.cuenta || "—"   
+                  )}
+                  
+                  </td>
                 <td className="px-6 py-4 text-center">
                   <div className="flex justify-center items-center gap-3">
                     <FaImage
