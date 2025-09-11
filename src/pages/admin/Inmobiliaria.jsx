@@ -45,7 +45,7 @@ export const Inmobiliaria = () => {
     setImgComprobante("");
     setMontoAlquiler("");
     setPorcentaje("");
-
+    
     if (fileInputRef.current) {
       fileInputRef.current.value = "";
     }
