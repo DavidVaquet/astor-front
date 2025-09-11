@@ -31,11 +31,11 @@ export const Inmobiliaria = () => {
   const fileInputRef = useRef(null);
 
   const resetFields = () => {
-    setTipo("");
-    setTipoComprobante("");
+    setTipo("ingreso");
+    setTipoComprobante("factura");
     setMontoComision("");
     setDescripcion("");
-    setMetodoPago("");
+    setMetodoPago("efectivo");
     setNroComprobante("");
     setImgComprobante("");
     setMontoAlquiler("");
