@@ -10,6 +10,11 @@ import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import { formatearPesos } from "../../helpers/formatearPesos";
 
+const METODOS_DE_PAGOS = ['transferencia', 'efectivo', 'tarjeta', 'debito', 'qr', 'combinada'];
+const TIPO_FACTURACION = ['ingreso', 'egreso'];
+const TIPO_COMPROBANTE = ['factura', 'ticket', 'recibo', 'transferencia', 'qr'];
+// const CUENTA_VALID = ["BNA+", "Mercadopago", "Naranja X"];
+
 export const Inmobiliaria = () => {
   const { toggleRecargar, setCambioGeneral, setCambioInmobiliaria } =
     useContext(ComprobanteContext);
@@ -55,7 +60,7 @@ export const Inmobiliaria = () => {
 
   useEffect(() => {
     const comisionCalculada = comision(montoAlquiler, porcentaje);
-    console.log(comisionCalculada);
+    // console.log(comisionCalculada);
     setMontoComision(comisionCalculada);
   }, [montoAlquiler, porcentaje]);
 
@@ -73,12 +78,12 @@ export const Inmobiliaria = () => {
   };
 
   const validarFormulario = () => {
-    if (!tipo) {
+    if (!TIPO_FACTURACION.includes(tipo)) {
       toast.error("Debes seleccionar un tipo de transacción.");
       return false;
     }
 
-    if (!tipoComprobante) {
+    if (!TIPO_COMPROBANTE.includes(tipoComprobante)) {
       toast.error("Debes seleccionar un tipo de comprobante.");
       return false;
     }
@@ -88,7 +93,7 @@ export const Inmobiliaria = () => {
       return false;
     }
 
-    if (!metodoPago) {
+    if (!METODOS_DE_PAGOS.includes(metodoPago)) {
       toast.error("Debes seleccionar un método de pago.");
       return false;
     }
@@ -119,12 +124,12 @@ export const Inmobiliaria = () => {
       montoAlquiler,
       imagenComprobante,
       toggleRecargar,
-      cuenta,
-      resetFields
+      cuenta
     });
 
     if (result) {
       toast.success("Comprobante cargado correctamente.");
+      resetFields();
       setCambioInmobiliaria((prev) => prev + 1);
       setCambioGeneral((prev) => prev + 1);
       enviarMensajeNuevoComprobante("astorInmobiliaria");
