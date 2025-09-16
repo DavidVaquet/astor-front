@@ -86,12 +86,17 @@ export const ListarComprobantes = ({ localProp, setCambio }) => {
 
   // Funcion para comenzar a editar
   const comenzarEdicion = (id, comprobante) => {
-    setEditandoId(id)
-    setValoresEditados({
-      descripcion: comprobante.descripcion,
-      monto: comprobante.monto,
-      nroComprobante: comprobante.nroComprobante,
-    })
+    try {
+      
+      setEditandoId(id)
+      setValoresEditados({
+        descripcion: comprobante.descripcion,
+        monto: comprobante.monto,
+        nroComprobante: comprobante.nroComprobante,
+      })
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   //  Funcion para guardar los cambios
