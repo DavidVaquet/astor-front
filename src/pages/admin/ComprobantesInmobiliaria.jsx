@@ -113,6 +113,7 @@ export const ComprobantesInmobiliaria = () => {
               <th className="px-6 py-4 text-left">Comprobante</th>
               <th className="px-6 py-4 text-left">Descripción</th>
               <th className="px-6 py-4 text-center">Monto</th>
+              <th className="px-6 py-4 text-center">Porcentaje</th>
               <th className="px-6 py-4 text-left">Usuario</th>
               <th className="px-7 py-4 text-left">Cuenta</th>
               <th className="px-6 py-4 text-center">Acciones</th>
@@ -163,6 +164,9 @@ export const ComprobantesInmobiliaria = () => {
                   ) : (
                     formatearPesos(comp.monto)
                   )}
+                </td>
+                <td className="px-6 py-4 text-center">
+                  {`${comp.porcentaje ?? 0}%`}
                 </td>
                 <td className="px-6 py-4 capitalize">{comp.usuario?.nombre || "Sin usuario"}</td>
                 <td className="px-7 py-4 capitalize">{comp.cuenta || "—"}</td>
