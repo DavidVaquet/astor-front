@@ -96,17 +96,22 @@ export const ListarComprobantes = ({ localProp, setCambio }) => {
 
   //  Funcion para guardar los cambios
   const guardarCambios = async (id) => {
-    await manejarActualizarComprobante({
-      id,
-      nuevosValores: valoresEditados,
-      setError,
-      setSuccess,
-      toast,
-      toggleRecargar,
-    })
-    setEditandoId(null)
-    setCambio((prev) => prev + 1)
-    setCambioGeneral((prev) => prev + 1)
+    try {
+      await manejarActualizarComprobante({
+        id,
+        nuevosValores: valoresEditados,
+        setError,
+        setSuccess,
+        toast,
+        toggleRecargar,
+      })
+      setEditandoId(null)
+      setCambio((prev) => prev + 1)
+      setCambioGeneral((prev) => prev + 1)
+      
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   return (
