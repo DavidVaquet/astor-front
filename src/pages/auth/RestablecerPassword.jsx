@@ -14,22 +14,39 @@ export const RestablecerPassword = () => {
   const [nuevoPassword, setNuevoPassword] = useState('');
   const [confirmarPassword, setConfirmarPassword] = useState('');
   const [error, setError] = useState('');
+  const [loading, setLoading] = useState(null);
 
   const handleSubmit = async(e) => {
     e.preventDefault();
-    
-    if (nuevoPassword !== confirmarPassword) {
+    setLoading("submit");
+
+    try {
+      if (nuevoPassword.trim() !== confirmarPassword.trim()) {
+          setError("Las contraseñas no coinciden");
+          return;
+        }
+      if (nuevoPassword.length <= 6) {
+      setError("La contraseña debe tener al menos 6 caracteres.");
+      return;
+      }
+      if (nuevoPassword !== confirmarPassword) {
         setError("Las contraseñas no coinciden");
         return;
       }
-
-    await manejarRestablecerPassword({
-        token,
-        nuevoPassword,
-        toast,
-        setError,
-        navigate
-    })
+  
+      await manejarRestablecerPassword({
+          token,
+          nuevoPassword,
+          toast,
+          setError,
+          navigate
+      })
+      
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoading(null);
+    }
   };
 
   return (
@@ -41,7 +58,8 @@ export const RestablecerPassword = () => {
       <h1 className='text-2xl text-center mb-8 font-bold tracking-[2px] dark:text-white text-black uppercase'>RESTABLECER <span className='text-primary'>CONTRASEñA</span></h1>
                 {error && <p className="text-red-500 mb-4 text-center font-medium">{error}</p>}
       <form
-      onSubmit={handleSubmit} 
+      onSubmit={handleSubmit}
+      aria-busy={loading === 'submit'}
       className='mb-6'
       >
         <div className='relative mb-4'>
@@ -67,6 +85,7 @@ export const RestablecerPassword = () => {
         <div>
           <button 
           type='submit'
+          disabled={loading === 'submit'}
           className='bg-primary w-full py-3 px-4 rounded-xl text-sm font-bold uppercase'>
           Confirmar
           </button>

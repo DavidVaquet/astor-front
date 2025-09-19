@@ -10,10 +10,20 @@ export const RecoveryPassword = () => {
 
   const [email, setEmail] = useState('');
   const [error, setError] = useState('');
+  const [loading, setLoading] = useState(null);
 
   const handleSubmit = async(e) => {
+
     e.preventDefault();
-    await enviarEmailRecuperacion({email, setError, toast})
+    setLoading('submit');
+    try {
+      await enviarEmailRecuperacion({email, setError, toast})
+      
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoading(null);
+    }
   }
 
   return (
@@ -24,7 +34,8 @@ export const RecoveryPassword = () => {
       <img src={logo} alt="Logo-Astor" className='w-36 h-36 mx-auto mb-2' />
       <h1 className='text-2xl text-center mb-8 font-bold tracking-[2px] dark:text-white text-black uppercase'>RECUPERAR <span className='text-primary'>CONTRASEñA</span></h1>
       <form
-      onSubmit={handleSubmit} 
+      onSubmit={handleSubmit}
+      aria-busy={loading === 'submit'}
       className='mb-6'
       >
         <div className='relative mb-4'>
@@ -40,7 +51,8 @@ export const RecoveryPassword = () => {
         <div>
           <button 
           type='submit'
-          className='bg-primary w-full py-3 px-4 rounded-xl text-sm font-bold uppercase'>
+          className='bg-primary w-full py-3 px-4 rounded-xl text-sm font-bold uppercase'
+          disabled={loading === 'submit'}>
           Enviar instrucciones
           </button>
         </div>
