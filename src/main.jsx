@@ -5,20 +5,22 @@ import { ComprobanteProvider } from './context/ComprobanteContext.jsx'
 
 
 const tema = localStorage.getItem("theme");
-if (tema === "dark") {
-  document.documentElement.classList.add("dark");
-} else {
-  document.documentElement.classList.remove("dark");
-}
+document.documentElement.classList.toggle("dark", tema === "dark");
 
 const token = localStorage.getItem('token');
+const path = window.location.pathname;
 
-if (!token && window.location.pathname !== '/login') {
-  window.location.href = '/login';
-} else {
-  createRoot(document.getElementById('root')).render(
-    <ComprobanteProvider>
-      <App />
-    </ComprobanteProvider>
-  );
-}
+// Rutas públicas
+const PUBLIC_PATHS = ['/login', '/recuperar-contraseña'];
+const isPublic = PUBLIC_PATHS.includes(path) 
+  || path.startsWith('/restablecer-password/');
+
+if (!token && !isPublic) {
+  window.location.replace('/login');
+} 
+
+createRoot(document.getElementById('root')).render(
+  <ComprobanteProvider>
+    <App />
+  </ComprobanteProvider>
+);
