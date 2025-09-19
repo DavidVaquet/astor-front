@@ -53,7 +53,7 @@ export const RecoveryPassword = () => {
           type='submit'
           className='bg-primary w-full py-3 px-4 rounded-xl text-sm font-bold uppercase'
           disabled={loading === 'submit'}>
-          Enviar instrucciones
+          { loading === 'submit' ? 'Enviando instrucciones' : 'Enviar instrucciones'}
           </button>
         </div>
       </form>
