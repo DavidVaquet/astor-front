@@ -53,7 +53,7 @@ export const RestablecerPassword = () => {
 
       <div className='min-h-screen flex dark:bg-secondary-900 bg-bclaro p-4 items-center justify-center'>
 
-    <div className='dark:bg-secondary-100 b-blanco p-12 rounded-xl w-auto lg:w-[500px]'>
+    <div className='dark:bg-secondary-100 bg-blanco shadow-2xl border-2 border-primary dark:border-none dark:shadow-none p-12 rounded-xl w-auto lg:w-[500px]'>
       <img src={logo} alt="Logo-Astor" className='w-36 h-36 mx-auto mb-2' />
       <h1 className='text-2xl text-center mb-8 font-bold tracking-[2px] dark:text-white text-black uppercase'>RESTABLECER <span className='text-primary'>CONTRASEñA</span></h1>
                 {error && <p className="text-red-500 mb-4 text-center font-medium">{error}</p>}
